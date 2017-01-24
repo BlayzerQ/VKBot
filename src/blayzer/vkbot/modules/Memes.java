@@ -33,9 +33,9 @@ public class Memes {
 						String key = media.get("access_key").toString();
 						System.out.println(media);
 						String attachment = type + owner_id + "_" + att_id + "_" + key;
-						vk.sendMessage(uid, "—вежак с ƒвача!", attachment);
+						vk.sendMessage(uid, "Свежак с двача!", attachment);
 						} else {
-							vk.sendMessage(uid, "ћоча удалил тред, свежака не будет!", null);
+							vk.sendMessage(uid, "Моча удалил тред, свежака не будет!", null);
 						}
 
 					}
@@ -56,9 +56,9 @@ public class Memes {
 							String key = media.get("access_key").toString();
 							System.out.println(media);
 							String attachment = type + owner_id + "_" + att_id + "_" + key;
-							vk.sendMessage(uid, "ћемосы!", attachment);
+							vk.sendMessage(uid, "Мемосы!", attachment);
 							} else {
-								vk.sendMessage(uid, "ћемосы не завезли. ƒержу в курсе!", null);
+								vk.sendMessage(uid, "Мемосы не завезли. держу в курсе!", null);
 							}
 
 						}
@@ -79,9 +79,9 @@ public class Memes {
 								String key = media.get("access_key").toString();
 								System.out.println(media);
 								String attachment = type + owner_id + "_" + att_id + "_" + key;
-								vk.sendMessage(uid, "Ѕаллов на " + random.nextInt(10) + " из 10", attachment);
+								vk.sendMessage(uid, "Баллов на " + random.nextInt(10) + " из 10", attachment);
 								} else {
-									vk.sendMessage(uid, "ќбнаружено ÷ѕ! ∆алоба на отправител¤ команды была отправлена!", null);
+									vk.sendMessage(uid, "Обнаружено ЦП! Жалоба на отправителя команды была отправлена!", null);
 								}
 
 							}
