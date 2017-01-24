@@ -20,18 +20,18 @@ public class Messages {
 		Random random = new Random();
 		message = lastMessage;
 		
-		if(lastMessage.length >= 1) {
 			if(checkMessage("привет") || checkMessage("здарова")) {
 				String[] answers = {"Готов служить!", "Здарова, тварына!", "Слава Украине!",
 						"Здарова, привет, привет, здарова!", "Привет, молодой!"}; 
-				vk.sendMessage(uid, answers[random.nextInt(3)], null);
+				vk.sendMessage(uid, answers[random.nextInt(4)], null);
 			}
 			else
 				if(checkMessage("луна"))
 					vk.sendMessage(uid, "&#127770;", null);
 			else
 				if(checkMessage("команды"))
-						vk.sendMessage(uid, "Список доступных команд: \n привет, луна, команды, шар", null);
+						vk.sendMessage(uid, "Список доступных команд: \n привет, луна, команды,"
+								+ "время, шар, двач, мемы, шк", null);
 			else
 				if(checkMessage("время")) {
 					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
@@ -46,15 +46,16 @@ public class Messages {
 							"Мой ответ - нет", "Да, но только если ты не смотришь аниме"}; 
 					vk.sendMessage(uid, answers[random.nextInt(9)], null);
 				}
-		}
 	}
 	
 	public static boolean checkMessage(String word) {
+		if(message.length >= 2) {
 		//for(String world : words) {
-			if(message.length > 0 && message[1].equalsIgnoreCase(word))
+			if(message[1].equalsIgnoreCase(word)) {
 				return true;
 		//}
-			else
+			} else
 				return false;
+		} return false;
 	}
 }

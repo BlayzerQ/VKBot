@@ -31,7 +31,6 @@ public class Memes {
 						String type = photo.get("type").toString();
 						String att_id = media.get("pid").toString();
 						String key = media.get("access_key").toString();
-						System.out.println(media);
 						String attachment = type + owner_id + "_" + att_id + "_" + key;
 						vk.sendMessage(uid, "Свежак с двача!", attachment);
 						} else {
@@ -54,7 +53,6 @@ public class Memes {
 							String type = photo.get("type").toString();
 							String att_id = media.get("pid").toString();
 							String key = media.get("access_key").toString();
-							System.out.println(media);
 							String attachment = type + owner_id + "_" + att_id + "_" + key;
 							vk.sendMessage(uid, "Мемосы!", attachment);
 							} else {
@@ -77,7 +75,6 @@ public class Memes {
 								String type = photo.get("type").toString();
 								String att_id = media.get("pid").toString();
 								String key = media.get("access_key").toString();
-								System.out.println(media);
 								String attachment = type + owner_id + "_" + att_id + "_" + key;
 								vk.sendMessage(uid, "Баллов на " + random.nextInt(10) + " из 10", attachment);
 								} else {
@@ -90,12 +87,14 @@ public class Memes {
 	}
 	
 	public static boolean checkMessage(String word) {
+		if(message.length >= 2) {
 		//for(String world : words) {
-			if(message.length > 0 && message[1].equalsIgnoreCase(word))
+			if(message[1].equalsIgnoreCase(word)) {
 				return true;
 		//}
-			else
+			} else
 				return false;
+		} return false;
 	}
 	
 }

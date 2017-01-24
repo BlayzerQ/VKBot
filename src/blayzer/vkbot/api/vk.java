@@ -46,22 +46,20 @@ public class vk {
     	
 		try {
 			Random random = new Random();
-			URL vkGetURL;
-			if(attachment != null) {
-			vkGetURL = new URL((vkApi + "/method/messages.send?user_id=" +
-					uid +"&message=" + fixString(message) + "&attachment=" + attachment + "&random_id=" + random.nextInt()
-					+ "&v=5.45&access_token=" + vkToken));
-			} else {
-				vkGetURL = new URL((vkApi + "/method/messages.send?user_id=" +
+			StringBuilder vkurl =  new StringBuilder();
+			vkurl.append("/method/messages.send?" +
 						uid +"&message=" + fixString(message) + "&random_id=" + random.nextInt()
-						+ "&v=5.45&access_token=" + vkToken));
+						+ "&v=5.45&access_token=" + vkToken);
+			if(attachment != null) {
+				vkurl.append("&attachment=" + attachment);
 			}
+			URL vkGetURL = new URL((vkApi + vkurl));
 	        URLConnection conVkGetURL = (URLConnection) vkGetURL.openConnection();
 	        conVkGetURL.setConnectTimeout(2000);
 	        
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(conVkGetURL.getInputStream(), "UTF-8"));
-	        System.out.println(in.readLine());
+	        System.out.println("Ответ: " + message + "\nВложение: " + attachment);
             in.close();
 	        
 		} catch (IOException e) {
@@ -97,7 +95,7 @@ public class vk {
                     new InputStreamReader(conVkGetURL.getInputStream(), "UTF-8"));
             String inputLine = in.readLine();
             in.close();
-            System.out.println(inputLine);
+            //System.out.println(inputLine);
             
 			JSONObject messages = (JSONObject) new JSONParser().parse(inputLine);
 			JSONArray response = (JSONArray) messages.get("response");

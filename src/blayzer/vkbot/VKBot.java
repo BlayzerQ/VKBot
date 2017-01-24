@@ -33,14 +33,20 @@ public class VKBot {
 				JSONArray response = (JSONArray) messages.get("response");
 					if(response != null) {
 						JSONObject json = (JSONObject) response.get(1);
-						String uid = json.get("uid").toString();
+						String uid = "";
+						if(json.get("chat_id") != null) {
+							uid = "chat_id=" + json.get("chat_id").toString();
+						} else {
+							uid = "user_id=" + json.get("uid").toString();
+						}
 						Long status = (Long) json.get("read_state");
 						String fullMessage = (String )json.get("body");
 						String[] lastMessage = fullMessage.split(" ");
 
-						if(prefixes.contains(lastMessage[0]) && status == 0){
+						if(prefixes.contains(lastMessage[0]) && status == 0 && lastMessage.length >= 2){
 							vk.setAsRead(uid);
-							System.out.println("Сообщение от " + "id"+ uid + ": " + fullMessage);
+							System.out.println("Сообщение от " + uid.replaceAll("_id=", " id") 
+									+ ": " + fullMessage);
 							
 							Messages.Init(uid, lastMessage);
 							Memes.Init(uid, lastMessage);
