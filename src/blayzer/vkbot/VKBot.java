@@ -10,18 +10,18 @@ import blayzer.vkbot.modules.Messages;
 
 public class VKBot {
 	
-	public static String prefixes = "! фб вб файнбот вкбот";
-	//public static String[] prefixes = {"!", "фб", "файнбот", "вкбот"};
+	public static String prefixes = "! С„Р± РІР± С„Р°Р№РЅР±РѕС‚ РІРєР±РѕС‚";
+	//public static String[] prefixes = {"!", "С„Р±", "С„Р°Р№РЅР±РѕС‚", "РІРєР±РѕС‚"};
 	
 	public void Init() {
-		System.out.println("Бот запущен! Авторизация...");
+		System.out.println("VKBot Р·Р°РїСѓС‰РµРЅ! РђРІС‚РѕСЂРёР·Р°С†РёСЏ...");
 		vk.setOnline();
 		try {
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Приступаю к приему сообщений.");
+		System.out.println("РџСЂРёСЃС‚СѓРїР°СЋ Рє РїСЂРёРµРјСѓ СЃРѕРѕР±С‰РµРЅРёР№.");
 		Work();
 	}
 	
@@ -40,7 +40,7 @@ public class VKBot {
 
 						if(prefixes.contains(lastMessage[0]) && status == 0){
 							vk.setAsRead(uid);
-							System.out.println("Команда от " + "id"+ uid + ": " + fullMessage);
+							System.out.println("РЎРѕРѕР±С‰РµРЅРёРµ РѕС‚ " + "id"+ uid + ": " + fullMessage);
 							
 							Messages.Init(uid, lastMessage);
 							Memes.Init(uid, lastMessage);

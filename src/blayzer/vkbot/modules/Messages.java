@@ -21,29 +21,29 @@ public class Messages {
 		message = lastMessage;
 		
 		if(lastMessage.length >= 1) {
-			if(checkMessage("привет") || checkMessage("здарова")) {
-				String[] answers = {"Готов служить!", "Здарова, тварына!", "Слава Украине!",
-						"Здарова, привет, привет, здарова!", "Привет, молодой!"}; 
+			if(checkMessage("РїСЂРёРІРµС‚") || checkMessage("Р·РґР°СЂРѕРІР°")) {
+				String[] answers = {"Р“РѕС‚РѕРІ СЃР»СѓР¶РёС‚СЊ!", "Р—РґР°СЂРѕРІР°, С‚РІР°СЂС‹РЅР°!", "РЎР»Р°РІР° РЈРєСЂР°РёРЅРµ!",
+						"Р—РґР°СЂРѕРІР°, РїСЂРёРІРµС‚, РїСЂРёРІРµС‚, Р·РґР°СЂРѕРІР°!", "РџСЂРёРІРµС‚, РјРѕР»РѕРґРѕР№!"}; 
 				vk.sendMessage(uid, answers[random.nextInt(3)], null);
 			}
 			else
-				if(checkMessage("луна"))
+				if(checkMessage("Р»СѓРЅР°"))
 					vk.sendMessage(uid, "&#127770;", null);
 			else
-				if(checkMessage("команды"))
-						vk.sendMessage(uid, "Список доступных команд: \n привет, луна, команды, шар", null);
+				if(checkMessage("РєРѕРјР°РЅРґС‹"))
+						vk.sendMessage(uid, "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєРѕРјР°РЅРґ: \n РїСЂРёРІРµС‚, Р»СѓРЅР°, РєРѕРјР°РЅРґС‹, С€Р°СЂ", null);
 			else
-				if(checkMessage("время")) {
+				if(checkMessage("РІСЂРµРјСЏ")) {
 					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
 					Date curDate = calendar.getTime();
 						vk.sendMessage(uid, curDate.toString(), null);
 				}
 			else
-				if(checkMessage("шар") || checkMessage("скажи")){
-					String[] answers = {"Да", "Конечно", "Не думаю",
-							"Нет", "Знаки говорят - да", "Не сомненно!",
-							"Скорее да, чем нет", "Не могу решить",
-							"Мой ответ - нет", "Да, но только если ты не смотришь аниме"}; 
+				if(checkMessage("С€Р°СЂ") || checkMessage("СЃРєР°Р¶Рё")){
+					String[] answers = {"Р”Р°", "РљРѕРЅРµС‡РЅРѕ", "РќРµ РґСѓРјР°СЋ",
+							"РќРµС‚", "Р—РЅР°РєРё РіРѕРІРѕСЂСЏС‚ - РґР°", "РќРµ СЃРѕРјРЅРµРЅРЅРѕ!",
+							"РЎРєРѕСЂРµРµ РґР°, С‡РµРј РЅРµС‚", "РќРµ РјРѕРіСѓ СЂРµС€РёС‚СЊ",
+							"РњРѕР№ РѕС‚РІРµС‚ - РЅРµС‚", "Р”Р°, РЅРѕ С‚РѕР»СЊРєРѕ РµСЃР»Рё С‚С‹ РЅРµ СЃРјРѕС‚СЂРёС€СЊ Р°РЅРёРјРµ"}; 
 					vk.sendMessage(uid, answers[random.nextInt(9)], null);
 				}
 		}

@@ -38,7 +38,7 @@ public class vk {
         } 
         catch (IOException e)
         {
-            return ("{response: {\"count\": 38889,\"items\": [{\"body\": \"Не удалось получить сообщение.\"}]}}");
+            return ("{response: {\"count\": 38889,\"items\": [{\"body\": \"РћС€РёР±РєР° РїРѕР»СѓС‡РµРЅРёСЏ СЃРѕРѕР±С‰РµРЅРёР№.\"}]}}");
         }  
     }
     
@@ -110,7 +110,7 @@ public class vk {
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 			
-			return ("Неизвестный отправитель");
+			return ("РќРµРёР·РІРµСЃС‚РЅС‹Р№ РѕС‚РїСЂР°РІРёС‚РµР»СЊ");
 		}
     }
     
@@ -146,7 +146,7 @@ public class vk {
         } 
         catch (IOException e)
         {
-            return ("{response: {\"count\": 38889,\"items\": [{\"body\": \"Не удалось получить посты.\"}]}}");
+            return ("{response: {\"count\": 38889,\"items\": [{\"body\": \"РћС€РёР±РєР° РїРѕР»СѓС‡РµРЅРёСЏ РїРѕСЃС‚РѕРІ.\"}]}}");
         }  
     }
     

@@ -18,7 +18,7 @@ public class Memes {
 		message = lastMessage;
 		
 		if(lastMessage.length >= 1) {
-			if(checkMessage("двач")) {
+			if(checkMessage("РґРІР°С‡")) {
 				JSONObject messages = (JSONObject) new JSONParser().parse(vk.getPosts(-22751485, 1985));
 				JSONArray response = (JSONArray) messages.get("response");
 					if(response != null) {
@@ -33,15 +33,15 @@ public class Memes {
 						String key = media.get("access_key").toString();
 						System.out.println(media);
 						String attachment = type + owner_id + "_" + att_id + "_" + key;
-						vk.sendMessage(uid, "Свежак с Двача!", attachment);
+						vk.sendMessage(uid, "вЂ”РІРµР¶Р°Рє СЃ Ж’РІР°С‡Р°!", attachment);
 						} else {
-							vk.sendMessage(uid, "Моча удалил тред, свежака не будет!", null);
+							vk.sendMessage(uid, "С›РѕС‡Р° СѓРґР°Р»РёР» С‚СЂРµРґ, СЃРІРµР¶Р°РєР° РЅРµ Р±СѓРґРµС‚!", null);
 						}
 
 					}
 			}
 			else
-				if(checkMessage("мемы")) {
+				if(checkMessage("РјРµРјС‹")) {
 					JSONObject messages = (JSONObject) new JSONParser().parse(vk.getPosts(-87960594, 1985));
 					JSONArray response = (JSONArray) messages.get("response");
 						if(response != null) {
@@ -56,15 +56,15 @@ public class Memes {
 							String key = media.get("access_key").toString();
 							System.out.println(media);
 							String attachment = type + owner_id + "_" + att_id + "_" + key;
-							vk.sendMessage(uid, "Мемосы!", attachment);
+							vk.sendMessage(uid, "С›РµРјРѕСЃС‹!", attachment);
 							} else {
-								vk.sendMessage(uid, "Мемосы не завезли. Держу в курсе!", null);
+								vk.sendMessage(uid, "С›РµРјРѕСЃС‹ РЅРµ Р·Р°РІРµР·Р»Рё. Ж’РµСЂР¶Сѓ РІ РєСѓСЂСЃРµ!", null);
 							}
 
 						}
 				}
 				else
-					if(checkMessage("шк")) {
+					if(checkMessage("С€Рє")) {
 						JSONObject messages = (JSONObject) new JSONParser().parse(vk.getPosts(-83971955, 1985));
 						JSONArray response = (JSONArray) messages.get("response");
 							if(response != null) {
@@ -79,9 +79,9 @@ public class Memes {
 								String key = media.get("access_key").toString();
 								System.out.println(media);
 								String attachment = type + owner_id + "_" + att_id + "_" + key;
-								vk.sendMessage(uid, "Баллов на " + random.nextInt(10) + " из 10", attachment);
+								vk.sendMessage(uid, "Р…Р°Р»Р»РѕРІ РЅР° " + random.nextInt(10) + " РёР· 10", attachment);
 								} else {
-									vk.sendMessage(uid, "Обнаружено ЦП! Жалоба на отправителя команды была отправлена!", null);
+									vk.sendMessage(uid, "СњР±РЅР°СЂСѓР¶РµРЅРѕ Г·С•! в€†Р°Р»РѕР±Р° РЅР° РѕС‚РїСЂР°РІРёС‚РµР»В¤ РєРѕРјР°РЅРґС‹ Р±С‹Р»Р° РѕС‚РїСЂР°РІР»РµРЅР°!", null);
 								}
 
 							}
