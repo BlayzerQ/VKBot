@@ -20,7 +20,7 @@ public class Messages {
 	public static void Init(String uid, String[] lastMessage) throws ParseException, IOException {
 		Random random = new Random();
 		
-			if(Utils.checkMessage("привет") || Utils.checkMessage("здарова")) {
+			if(Utils.checkMessage("привет", "здарова")) {
 				String[] answers = {"Готов служить!", "Здарова, тварына!", "Слава Украине!",
 						"Здарова, привет, привет, здарова!", "Привет, молодой!"}; 
 				VK.sendMessage(uid, answers[random.nextInt(4)], null);
@@ -40,7 +40,7 @@ public class Messages {
 						VK.sendMessage(uid, curDate.toString(), null);
 				}
 			else
-				if(Utils.checkMessage("шар") || Utils.checkMessage("скажи")){
+				if(Utils.checkMessage("шар", "скажи")){
 					String[] answers = {"Да", "Конечно", "Не думаю",
 							"Нет", "Знаки говорят - да", "Не сомненно!",
 							"Скорее да, чем нет", "Не могу решить",
@@ -86,21 +86,7 @@ public class Messages {
 //							Integer.valueOf(uid.replaceAll("user_id=", "")), 5));
 //					JSONArray response = (JSONArray) audios.get("response");
 //						if(response != null) {
-//							System.out.println(audios);
-//							JSONObject json = (JSONObject) response.get(1);
-//							JSONArray att = (JSONArray) json.get("attachments");
-//							if(att != null) {
-//							 JSONObject photo = (JSONObject) att.get(0);
-//							 JSONObject media = (JSONObject) photo.get("photo");
-//							 String owner_id = media.get("owner_id").toString();
-//							 String type = photo.get("type").toString();
-//							 String att_id = media.get("pid").toString();
-//							 String key = media.get("access_key").toString();
-//							 String attachment = type + owner_id + "_" + att_id + "_" + key;
-//							 VK.sendMessage(uid, "Вот твоя музыка!", attachment);
-//							} else {
-//								VK.sendMessage(uid, "У тебя аудиозаписи закрыты!", null);
-//							}
+//							 VK.sendMessage(uid, "Вот твоя музыка!", Utils.getAttachMedia(response);
 //
 //						}
 //				}

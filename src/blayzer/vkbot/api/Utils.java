@@ -8,6 +8,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import blayzer.vkbot.VKBot;
 
 public class Utils {
@@ -37,15 +40,31 @@ public class Utils {
         in.close();
 	}
 	
-	public static boolean checkMessage(String word) {
+	public static boolean checkMessage(String... words) {
 		if(VKBot.lastMessage.length >= 2) {
-		//for(String world : words) {
+		for(String word : words) {
 			if(VKBot.lastMessage[1].equalsIgnoreCase(word)) {
 				return true;
-		//}
-			} else
-				return false;
+			}
+		}
 		} return false;
+	}
+	
+	public static String getAttachMedia(JSONArray response) {
+		JSONObject json = (JSONObject) response.get(1);
+		JSONArray att = (JSONArray) json.get("attachments");
+		if(att != null) {
+		JSONObject photo = (JSONObject) att.get(0);
+		JSONObject media = (JSONObject) photo.get("photo");
+		String owner_id = media.get("owner_id").toString();
+		String type = photo.get("type").toString();
+		String att_id = media.get("pid").toString();
+		String key = media.get("access_key").toString();
+		String attachment = type + owner_id + "_" + att_id + "_" + key;
+		
+		return attachment;
+		}
+		return null;
 	}
 	
     public static String fixString(String component) {

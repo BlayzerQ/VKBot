@@ -23,21 +23,9 @@ public class Posts {
 				JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-22751485, 1985));
 				JSONArray response = (JSONArray) messages.get("response");
 					if(response != null) {
-						JSONObject json = (JSONObject) response.get(1);
-						JSONArray att = (JSONArray) json.get("attachments");
-						if(att != null) {
-						JSONObject photo = (JSONObject) att.get(0);
-						JSONObject media = (JSONObject) photo.get("photo");
-						String owner_id = media.get("owner_id").toString();
-						String type = photo.get("type").toString();
-						String att_id = media.get("pid").toString();
-						String key = media.get("access_key").toString();
-						String attachment = type + owner_id + "_" + att_id + "_" + key;
-						VK.sendMessage(uid, "Свежак с двача!", attachment);
-						} else {
-							VK.sendMessage(uid, "Моча удалил тред, свежака не будет!", null);
+						if(response != null) {
+							VK.sendMessage(uid, "Свежак с Двача!", Utils.getAttachMedia(response));
 						}
-
 					}
 			}
 			else
@@ -45,111 +33,52 @@ public class Posts {
 					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-87960594, 1985));
 					JSONArray response = (JSONArray) messages.get("response");
 						if(response != null) {
-							JSONObject json = (JSONObject) response.get(1);
-							JSONArray att = (JSONArray) json.get("attachments");
-							if(att != null) {
-							JSONObject photo = (JSONObject) att.get(0);
-							JSONObject media = (JSONObject) photo.get("photo");
-							String owner_id = media.get("owner_id").toString();
-							String type = photo.get("type").toString();
-							String att_id = media.get("pid").toString();
-							String key = media.get("access_key").toString();
-							String attachment = type + owner_id + "_" + att_id + "_" + key;
-							VK.sendMessage(uid, "Мемосы!", attachment);
-							} else {
-								VK.sendMessage(uid, "Мемосы не завезли. держу в курсе!", null);
+							if(response != null) {
+								VK.sendMessage(uid, "Мемосы!", Utils.getAttachMedia(response));
 							}
 
 						}
 				}
-				else
-					if(Utils.checkMessage("шк")) {
-						JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-83971955, 1985));
-						JSONArray response = (JSONArray) messages.get("response");
+			else
+				if(Utils.checkMessage("шк")) {
+					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-83971955, 1985));
+					JSONArray response = (JSONArray) messages.get("response");
+						if(response != null) {
 							if(response != null) {
-								JSONObject json = (JSONObject) response.get(1);
-								JSONArray att = (JSONArray) json.get("attachments");
-								if(att != null) {
-								JSONObject photo = (JSONObject) att.get(0);
-								JSONObject media = (JSONObject) photo.get("photo");
-								String owner_id = media.get("owner_id").toString();
-								String type = photo.get("type").toString();
-								String att_id = media.get("pid").toString();
-								String key = media.get("access_key").toString();
-								String attachment = type + owner_id + "_" + att_id + "_" + key;
-								VK.sendMessage(uid, "Баллов на " + random.nextInt(10) + " из 10", attachment);
-								} else {
-									VK.sendMessage(uid, "Обнаружено ЦП! Жалоба на отправителя команды была отправлена!", null);
-								}
-
+								VK.sendMessage(uid, "Баллов на " + random.nextInt(10) + " из 10", Utils.getAttachMedia(response));
 							}
-					}
-					else
-						if(Utils.checkMessage("сиськи")) {
-							JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-20282193, 800));
-							JSONArray response = (JSONArray) messages.get("response");
-								if(response != null) {
-									JSONObject json = (JSONObject) response.get(1);
-									JSONArray att = (JSONArray) json.get("attachments");
-									if(att != null) {
-									JSONObject photo = (JSONObject) att.get(0);
-									JSONObject media = (JSONObject) photo.get("photo");
-									String owner_id = media.get("owner_id").toString();
-									String type = photo.get("type").toString();
-									String att_id = media.get("pid").toString();
-									String key = media.get("access_key").toString();
-									String attachment = type + owner_id + "_" + att_id + "_" + key;
-									VK.sendMessage(uid, "Сиськи поданы!", attachment);
-									} else {
-										VK.sendMessage(uid, "Нулевочку нашел! Не, не буду скидывать.", null);
-									}
-
-								}
 						}
-						else
-							if(Utils.checkMessage("фм")) {
-								JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-35140461, 1100));
-								JSONArray response = (JSONArray) messages.get("response");
-									if(response != null) {
-										JSONObject json = (JSONObject) response.get(1);
-										JSONArray att = (JSONArray) json.get("attachments");
-										if(att != null) {
-										JSONObject photo = (JSONObject) att.get(0);
-										JSONObject media = (JSONObject) photo.get("photo");
-										String owner_id = media.get("owner_id").toString();
-										String type = photo.get("type").toString();
-										String att_id = media.get("pid").toString();
-										String key = media.get("access_key").toString();
-										String attachment = type + owner_id + "_" + att_id + "_" + key;
-										VK.sendMessage(uid, "Куйня какая-то!", attachment);
-										} else {
-											VK.sendMessage(uid, "Зашкварные! Не скину!", null);
-										}
-
-									}
+				}
+			else
+				if(Utils.checkMessage("сиськи")) {
+					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-20282193, 800));
+					JSONArray response = (JSONArray) messages.get("response");
+						if(response != null) {
+							if(response != null) {
+								VK.sendMessage(uid, "Сиськи поданы!", Utils.getAttachMedia(response));
 							}
-							else
-								if(Utils.checkMessage("шкуры")) {
-									JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-83971955, 1985));
-									JSONArray response = (JSONArray) messages.get("response");
-										if(response != null) {
-											JSONObject json = (JSONObject) response.get(1);
-											JSONArray att = (JSONArray) json.get("attachments");
-											if(att != null) {
-											JSONObject photo = (JSONObject) att.get(0);
-											JSONObject media = (JSONObject) photo.get("photo");
-											String owner_id = media.get("owner_id").toString();
-											String type = photo.get("type").toString();
-											String att_id = media.get("pid").toString();
-											String key = media.get("access_key").toString();
-											String attachment = type + owner_id + "_" + att_id + "_" + key;
-											VK.sendMessage(uid, "Как вам эта?", attachment);
-											} else {
-												VK.sendMessage(uid, "Ошибка получения шкур", null);
-											}
 
-										}
-								}
+						}
+				}
+			else
+				if(Utils.checkMessage("фм")) {
+					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-35140461, 1100));
+					JSONArray response = (JSONArray) messages.get("response");
+						if(response != null) {
+							if(response != null) {
+								VK.sendMessage(uid, "Куйня какая-то!", Utils.getAttachMedia(response));
+							}
+
+						}
+				}
+			else
+				if(Utils.checkMessage("шкуры")) {
+					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-83971955, 1985));
+					JSONArray response = (JSONArray) messages.get("response");
+						if(response != null) {
+							VK.sendMessage(uid, "Как вам эта?", Utils.getAttachMedia(response));
+						}
+				}
 		}
 	}
 	
