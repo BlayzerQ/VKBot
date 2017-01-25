@@ -57,7 +57,7 @@ public class VK {
     public static String getName (String uid) {
     	
 		try {
-			String responce = Utils.readUrl(vkApi + "/method/users.get?user_ids=" +
+			String responce = Utils.readUrl(vkApi + "/method/users.get?" +
 					uid + "&access_token="+vkToken);
             
 			JSONObject messages = (JSONObject) new JSONParser().parse(responce);
@@ -111,7 +111,7 @@ public class VK {
     
     public static String getAudioRecomendations(Integer userID, int count) {
         try {
-			String responce = Utils.readUrl(vkApi + "/method/audio.getRecommendations?user_id=" + userID + 
+			String responce = Utils.readUrl(vkApi + "/method/audio.getRecommendations?" + userID + 
         			"&count=" + count + "&access_token="+vkToken);
 			System.out.println(responce);
             return (responce);
