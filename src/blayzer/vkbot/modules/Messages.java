@@ -6,10 +6,12 @@ import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import blayzer.vkbot.VKBot;
 import blayzer.vkbot.api.VK;
 import blayzer.vkbot.api.Utils;
 
@@ -28,58 +30,14 @@ public class Messages {
 					VK.sendMessage(uid, "&#127770;", null);
 			else
 				if(Utils.checkMessage("команды"))
-						VK.sendMessage(uid, "Список доступных команд: \n привет, луна, команды,"
-								+ "время, шар, двач, мемы, шк, сиськи, фм, онлайн, шкуры, курс", null);
+						VK.sendMessage(uid, "Список доступных команд: \nпривет, \nлуна, \nкоманды,"
+								+ "\nвремя, \nшар, \nдвач, \nмемы, \nшк, \nсиськи, \nфм, "
+								+ "\nонлайн, \nшкуры, \nкурс", null);
 			else
 				if(Utils.checkMessage("время")) {
 					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
 					Date curDate = calendar.getTime();
 						VK.sendMessage(uid, curDate.toString(), null);
-				}
-			else
-				if(Utils.checkMessage("онлайн")) {
-					
-					String responce = Utils.readUrl("http://finemine.ru/mon/ajax.php");
-		            
-		            JSONObject onlineUrl = (JSONObject) new JSONParser().parse(responce);
-					JSONObject servers = (JSONObject) onlineUrl.get("servers");
-						if(servers != null) {
-							JSONObject hardtech = (JSONObject) servers.get("HardTech");
-							JSONObject technomagic = (JSONObject) servers.get("TechnoMagic");
-							JSONObject magicrpg = (JSONObject) servers.get("MagicRPG");
-				            String htOnline = hardtech.get("online").toString();
-				            String tmOnline = technomagic.get("online").toString();
-				            String magicOnline = magicrpg.get("online").toString();
-							String onlineAll = onlineUrl.get("online").toString();
-							String recordDay = onlineUrl.get("recordday").toString();
-							String record = onlineUrl.get("record").toString();
-				            
-				            System.out.println(onlineUrl);
-							
-							VK.sendMessage(uid, "HardTech: " + htOnline + "\nTechnoMagic: " + tmOnline +
-									"\nMagicRPG: " + magicOnline + "\nОбщий онлайн: " + onlineAll +
-									"\nДневной рекорд: " + recordDay + "\nОбщий рекорд: " + record, null);
-
-						}
-				}
-			else
-				if(Utils.checkMessage("курс")) {
-						
-					String responceUSD = Utils.readUrl("http://api.fixer.io/latest?base=USD");
-					String responceEUR = Utils.readUrl("http://api.fixer.io/latest?base=EUR");
-			            
-			           JSONObject kursUsdUrl = (JSONObject) new JSONParser().parse(responceUSD);
-			           JSONObject kursEurUrl = (JSONObject) new JSONParser().parse(responceEUR);        
-			           JSONObject ratesUsd = (JSONObject) kursUsdUrl.get("rates");
-			           JSONObject ratesEur = (JSONObject) kursEurUrl.get("rates");
-						if(ratesUsd != null && ratesEur != null) {
-							String USD = ratesUsd.get("RUB").toString();
-							String EUR = ratesEur.get("RUB").toString();
-
-							VK.sendMessage(uid, "1 Доллар = " + USD + "\n1 Евро = " + EUR +
-									"\n40 евро = " + Float.valueOf(EUR)*40, null);
-
-						}
 				}
 			else
 				if(Utils.checkMessage("шар") || Utils.checkMessage("скажи")){
@@ -89,5 +47,62 @@ public class Messages {
 							"Мой ответ - нет", "Да, но только если ты не смотришь аниме"}; 
 					VK.sendMessage(uid, answers[random.nextInt(9)], null);
 				}
+			else
+				if(Utils.checkMessage("напиши")) {
+					if(VKBot.lastMessage.length > 2) {
+						StringBuilder fullMessage = new StringBuilder();
+						for (int i = 3; i < lastMessage.length; i++) {
+							fullMessage.append(lastMessage[i] + " ");
+						}
+						VK.sendMessage("user_id=" + VKBot.lastMessage[2], "Привет! Меня тут попросили тебе написать: \n"
+								+ fullMessage, null);
+						VK.sendMessage(uid, "Сообщение отправлено.", null);
+					} else
+						VK.sendMessage(uid, "Кому и что мне написать?", null);
+				}
+				else
+					if(Utils.checkMessage("найди")) {
+						if(VKBot.lastMessage.length > 2) {
+							JSONObject request = (JSONObject) new JSONParser().parse(VK.searchVideo(VKBot.lastMessage[2]));
+							JSONArray response = (JSONArray) request.get("response");
+								if(response != null) {
+									JSONObject json = (JSONObject) response.get(1);
+									System.out.println(json);
+									if(json != null) {
+										String owner_id = json.get("owner_id").toString();
+										String id = json.get("id").toString();
+									VK.sendMessage(uid, "Вот, что я нашел", "video" + owner_id + "_" + id);
+									} else {
+										VK.sendMessage(uid, "Ошибка поиска", null);
+									}
+
+								}
+						} else
+							VK.sendMessage(uid, "Что мне искать?", null);
+					}
+//			else
+//				if(Utils.checkMessage("музыка")) {
+//					JSONObject audios = (JSONObject) new JSONParser().parse(VK.getAudioRecomendations(
+//							Integer.valueOf(uid.replaceAll("user_id=", "")), 5));
+//					JSONArray response = (JSONArray) audios.get("response");
+//						if(response != null) {
+//							System.out.println(audios);
+//							JSONObject json = (JSONObject) response.get(1);
+//							JSONArray att = (JSONArray) json.get("attachments");
+//							if(att != null) {
+//							 JSONObject photo = (JSONObject) att.get(0);
+//							 JSONObject media = (JSONObject) photo.get("photo");
+//							 String owner_id = media.get("owner_id").toString();
+//							 String type = photo.get("type").toString();
+//							 String att_id = media.get("pid").toString();
+//							 String key = media.get("access_key").toString();
+//							 String attachment = type + owner_id + "_" + att_id + "_" + key;
+//							 VK.sendMessage(uid, "Вот твоя музыка!", attachment);
+//							} else {
+//								VK.sendMessage(uid, "У тебя аудиозаписи закрыты!", null);
+//							}
+//
+//						}
+//				}
 	}
 }

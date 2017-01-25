@@ -8,20 +8,19 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class VK {   
-    
-	static String vkToken = "3986146576be07b2f6c0f0dbcde7520c8011fa3ab420a754e6a54175e79b5438c774108212474515993dc";
+public class VK { 
+	static String vkToken = "9822c84f64a7838474bd0de7b8afab4160ed3bbbe15d697d946e9d89776b32760b39c929dd1122e5da332";
     static String vkApi= "https://api.vk.com";
     
     public static String getMessages() {
 
         try { 
-        	String responce = Utils.readUrl(vkApi + "/method/messages.get?out=0&count=1&access_token="+vkToken);
+        	String responce = Utils.readUrl(vkApi + "/method/messages.get?out=0&count=20&access_token="+vkToken);
             return (responce);
         } 
         catch (IOException e)
         {
-            return ("{response: {\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения сообщений.\"}]}}");
+            return ("{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения сообщений.\"}]}}");
         }  
     }
     
@@ -94,7 +93,32 @@ public class VK {
         } 
         catch (IOException e)
         {
-            return ("{response: {\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения постов.\"}]}}");
+            return ("{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения постов.\"}]}}");
+        }  
+    }
+    
+    public static String searchVideo(String request) {
+        try { 
+			String responce = Utils.readUrl(vkApi + "/method/video.search?q=" + request + 
+        			"&sort=2&adult=0&access_token="+vkToken);
+            return (responce);
+        } 
+        catch (IOException e)
+        {
+            return ("{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения видео.\"}]}}");
+        }  
+    }
+    
+    public static String getAudioRecomendations(Integer userID, int count) {
+        try {
+			String responce = Utils.readUrl(vkApi + "/method/audio.getRecommendations?user_id=" + userID + 
+        			"&count=" + count + "&access_token="+vkToken);
+			System.out.println(responce);
+            return (responce);
+        } 
+        catch (IOException e)
+        {
+            return ("{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения аудиозаписей.\"}]}]}");
         }  
     }
 	

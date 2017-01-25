@@ -33,7 +33,9 @@ public class VKBot {
 				
 				JSONObject messages = (JSONObject) new JSONParser().parse(VK.getMessages());
 				JSONArray response = (JSONArray) messages.get("response");
+				System.out.println(response);
 					if(response != null) {
+						//Добавить тут мультипоточную обработку сообщений циклом
 						JSONObject json = (JSONObject) response.get(1);
 						String uid = "";
 						if(json.get("chat_id") != null) {
