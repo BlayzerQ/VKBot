@@ -4,9 +4,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import blayzer.vkbot.api.vk;
-import blayzer.vkbot.modules.Memes;
+import blayzer.vkbot.api.VK;
+import blayzer.vkbot.modules.Posts;
 import blayzer.vkbot.modules.Messages;
+import blayzer.vkbot.modules.Sites;
 
 public class VKBot {
 	
@@ -15,7 +16,7 @@ public class VKBot {
 	
 	public void Init() {
 		System.out.println("VKBot запущен! Авторизация...");
-		vk.setOnline();
+		VK.setOnline();
 		try {
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
@@ -29,7 +30,7 @@ public class VKBot {
 		try {
 			while(true){
 				
-				JSONObject messages = (JSONObject) new JSONParser().parse(vk.getMessages());
+				JSONObject messages = (JSONObject) new JSONParser().parse(VK.getMessages());
 				JSONArray response = (JSONArray) messages.get("response");
 					if(response != null) {
 						JSONObject json = (JSONObject) response.get(1);
@@ -44,12 +45,13 @@ public class VKBot {
 						String[] lastMessage = fullMessage.split(" ");
 
 						if(prefixes.contains(lastMessage[0]) && status == 0 && lastMessage.length >= 2){
-							vk.setAsRead(uid);
+							VK.setAsRead(uid);
 							System.out.println("Сообщение от " + uid.replaceAll("_id=", " id") 
 									+ ": " + fullMessage);
 							
 							Messages.Init(uid, lastMessage);
-							Memes.Init(uid, lastMessage);
+							Posts.Init(uid, lastMessage);
+							Sites.Init(uid, lastMessage);
 						}
 					}
 				
