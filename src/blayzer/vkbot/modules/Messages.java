@@ -1,17 +1,11 @@
 package blayzer.vkbot.modules;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -21,32 +15,29 @@ import blayzer.vkbot.api.Utils;
 
 public class Messages {
 	
-	static String[] message; 
-	
 	public static void Init(String uid, String[] lastMessage) throws ParseException, IOException {
 		Random random = new Random();
-		message = lastMessage;
 		
-			if(checkMessage("привет") || checkMessage("здарова")) {
+			if(Utils.checkMessage("привет") || Utils.checkMessage("здарова")) {
 				String[] answers = {"Готов служить!", "Здарова, тварына!", "Слава Украине!",
 						"Здарова, привет, привет, здарова!", "Привет, молодой!"}; 
 				VK.sendMessage(uid, answers[random.nextInt(4)], null);
 			}
 			else
-				if(checkMessage("луна"))
+				if(Utils.checkMessage("луна"))
 					VK.sendMessage(uid, "&#127770;", null);
 			else
-				if(checkMessage("команды"))
+				if(Utils.checkMessage("команды"))
 						VK.sendMessage(uid, "Список доступных команд: \n привет, луна, команды,"
-								+ "время, шар, двач, мемы, шк, сиськи, фм, онлайн, шкуры", null);
+								+ "время, шар, двач, мемы, шк, сиськи, фм, онлайн, шкуры, курс", null);
 			else
-				if(checkMessage("время")) {
+				if(Utils.checkMessage("время")) {
 					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
 					Date curDate = calendar.getTime();
 						VK.sendMessage(uid, curDate.toString(), null);
 				}
 			else
-				if(checkMessage("онлайн")) {
+				if(Utils.checkMessage("онлайн")) {
 					
 					String responce = Utils.readUrl("http://finemine.ru/mon/ajax.php");
 		            
@@ -72,7 +63,7 @@ public class Messages {
 						}
 				}
 			else
-				if(checkMessage("курс")) {
+				if(Utils.checkMessage("курс")) {
 						
 					String responceUSD = Utils.readUrl("http://api.fixer.io/latest?base=USD");
 					String responceEUR = Utils.readUrl("http://api.fixer.io/latest?base=EUR");
@@ -91,23 +82,12 @@ public class Messages {
 						}
 				}
 			else
-				if(checkMessage("шар") || checkMessage("скажи")){
+				if(Utils.checkMessage("шар") || Utils.checkMessage("скажи")){
 					String[] answers = {"Да", "Конечно", "Не думаю",
 							"Нет", "Знаки говорят - да", "Не сомненно!",
 							"Скорее да, чем нет", "Не могу решить",
 							"Мой ответ - нет", "Да, но только если ты не смотришь аниме"}; 
 					VK.sendMessage(uid, answers[random.nextInt(9)], null);
 				}
-	}
-	
-	public static boolean checkMessage(String word) {
-		if(message.length >= 2) {
-		//for(String world : words) {
-			if(message[1].equalsIgnoreCase(word)) {
-				return true;
-		//}
-			} else
-				return false;
-		} return false;
 	}
 }

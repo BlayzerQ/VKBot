@@ -12,6 +12,7 @@ import blayzer.vkbot.modules.Sites;
 public class VKBot {
 	
 	public static String prefixes = "! фб вб файнбот вкбот";
+	public static String[] lastMessage;
 	//public static String[] prefixes = {"!", "фб", "файнбот", "вкбот"};
 	
 	public void Init() {
@@ -42,7 +43,7 @@ public class VKBot {
 						}
 						Long status = (Long) json.get("read_state");
 						String fullMessage = (String )json.get("body");
-						String[] lastMessage = fullMessage.split(" ");
+						lastMessage = fullMessage.split(" ");
 
 						if(prefixes.contains(lastMessage[0]) && status == 0 && lastMessage.length >= 2){
 							VK.setAsRead(uid);

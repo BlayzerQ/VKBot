@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import blayzer.vkbot.api.Utils;
 import blayzer.vkbot.api.VK;
 
 public class Posts {
@@ -18,7 +19,7 @@ public class Posts {
 		message = lastMessage;
 		
 		if(lastMessage.length >= 1) {
-			if(checkMessage("двач")) {
+			if(Utils.checkMessage("двач")) {
 				JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-22751485, 1985));
 				JSONArray response = (JSONArray) messages.get("response");
 					if(response != null) {
@@ -40,7 +41,7 @@ public class Posts {
 					}
 			}
 			else
-				if(checkMessage("мемы")) {
+				if(Utils.checkMessage("мемы")) {
 					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-87960594, 1985));
 					JSONArray response = (JSONArray) messages.get("response");
 						if(response != null) {
@@ -62,7 +63,7 @@ public class Posts {
 						}
 				}
 				else
-					if(checkMessage("шк")) {
+					if(Utils.checkMessage("шк")) {
 						JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-83971955, 1985));
 						JSONArray response = (JSONArray) messages.get("response");
 							if(response != null) {
@@ -84,7 +85,7 @@ public class Posts {
 							}
 					}
 					else
-						if(checkMessage("сиськи")) {
+						if(Utils.checkMessage("сиськи")) {
 							JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-20282193, 800));
 							JSONArray response = (JSONArray) messages.get("response");
 								if(response != null) {
@@ -106,7 +107,7 @@ public class Posts {
 								}
 						}
 						else
-							if(checkMessage("фм")) {
+							if(Utils.checkMessage("фм")) {
 								JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-35140461, 1100));
 								JSONArray response = (JSONArray) messages.get("response");
 									if(response != null) {
@@ -128,7 +129,7 @@ public class Posts {
 									}
 							}
 							else
-								if(checkMessage("шкуры")) {
+								if(Utils.checkMessage("шкуры")) {
 									JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-83971955, 1985));
 									JSONArray response = (JSONArray) messages.get("response");
 										if(response != null) {
@@ -150,17 +151,6 @@ public class Posts {
 										}
 								}
 		}
-	}
-	
-	public static boolean checkMessage(String word) {
-		if(message.length >= 2) {
-		//for(String world : words) {
-			if(message[1].equalsIgnoreCase(word)) {
-				return true;
-		//}
-			} else
-				return false;
-		} return false;
 	}
 	
 }
