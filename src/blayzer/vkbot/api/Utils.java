@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Random;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -65,6 +66,11 @@ public class Utils {
 		return attachment;
 		}
 		return null;
+	}
+	
+	public static String getRandomMessage(String... words) {
+		Random random = new Random();
+		return words[random.nextInt(words.length)];
 	}
 	
     public static String fixString(String component) {

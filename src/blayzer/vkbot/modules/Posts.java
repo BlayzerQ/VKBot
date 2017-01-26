@@ -12,11 +12,8 @@ import blayzer.vkbot.api.VK;
 
 public class Posts {
 
-	static String[] message; 
-	
 	public static void Init(String uid, String[] lastMessage) throws ParseException {
 		Random random = new Random();
-		message = lastMessage;
 		
 		if(lastMessage.length >= 1) {
 			if(Utils.checkMessage("двач")) {
@@ -24,7 +21,9 @@ public class Posts {
 				JSONArray response = (JSONArray) messages.get("response");
 					if(response != null) {
 						if(response != null) {
-							VK.sendMessage(uid, "Свежак с Двача!", Utils.getAttachMedia(response));
+							String answer = Utils.getRandomMessage("Свежак с Двача!", "Ну держи!",
+									"Не баян (баян)", "Каеф", "&#127770;");
+							VK.sendMessage(uid, answer, Utils.getAttachMedia(response));
 						}
 					}
 			}
@@ -34,7 +33,8 @@ public class Posts {
 					JSONArray response = (JSONArray) messages.get("response");
 						if(response != null) {
 							if(response != null) {
-								VK.sendMessage(uid, "Мемосы!", Utils.getAttachMedia(response));
+								String answer = Utils.getRandomMessage("Мемосы!", "Мемы поданы!", "&#127770;");
+								VK.sendMessage(uid, answer, Utils.getAttachMedia(response));
 							}
 
 						}
@@ -45,7 +45,10 @@ public class Posts {
 					JSONArray response = (JSONArray) messages.get("response");
 						if(response != null) {
 							if(response != null) {
-								VK.sendMessage(uid, "Баллов на " + random.nextInt(10) + " из 10", Utils.getAttachMedia(response));
+								String answer = Utils.getRandomMessage("Я тут выбрал, посмотри", "Вот, держи!",
+										"Баллов на " + random.nextInt(10) + " из 10", "А разве за ЦП не банят?",
+										"&#127770;");
+								VK.sendMessage(uid, answer, Utils.getAttachMedia(response));
 							}
 						}
 				}
@@ -55,7 +58,8 @@ public class Posts {
 					JSONArray response = (JSONArray) messages.get("response");
 						if(response != null) {
 							if(response != null) {
-								VK.sendMessage(uid, "Сиськи поданы!", Utils.getAttachMedia(response));
+								String answer = Utils.getRandomMessage("Ну держи!", "Сиськи поданы!", "&#127770;");
+								VK.sendMessage(uid, answer, Utils.getAttachMedia(response));
 							}
 
 						}
@@ -66,7 +70,9 @@ public class Posts {
 					JSONArray response = (JSONArray) messages.get("response");
 						if(response != null) {
 							if(response != null) {
-								VK.sendMessage(uid, "Куйня какая-то!", Utils.getAttachMedia(response));
+								String answer = Utils.getRandomMessage("Я сам смотреть не буду, но вы смотрите",
+										"Ну держи!", "Лол, что это вообще?");
+								VK.sendMessage(uid, answer, Utils.getAttachMedia(response));
 							}
 
 						}
@@ -76,7 +82,9 @@ public class Posts {
 					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-83971955, 1985));
 					JSONArray response = (JSONArray) messages.get("response");
 						if(response != null) {
-							VK.sendMessage(uid, "Как вам эта?", Utils.getAttachMedia(response));
+							String answer = Utils.getRandomMessage("Как вам эта?", "Вроде ничего так...",
+									"Баллов на " + random.nextInt(10) + " из 10", "Вот, держи!");
+							VK.sendMessage(uid, answer, Utils.getAttachMedia(response));
 						}
 				}
 		}

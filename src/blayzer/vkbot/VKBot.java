@@ -7,6 +7,7 @@ import org.json.simple.parser.JSONParser;
 import blayzer.vkbot.api.VK;
 import blayzer.vkbot.modules.Posts;
 import blayzer.vkbot.modules.Messages;
+import blayzer.vkbot.modules.Shedule;
 import blayzer.vkbot.modules.Sites;
 
 public class VKBot {
@@ -18,6 +19,7 @@ public class VKBot {
 	public void Init() {
 		System.out.println("VKBot запущен! Авторизация...");
 		VK.setOnline();
+		Shedule.Init();
 		try {
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
@@ -58,7 +60,6 @@ public class VKBot {
 							}
 						}
 					}
-				
 					Thread.sleep(400);
 				}
 		} catch (Exception e) {

@@ -16,11 +16,11 @@ public class VK {
 
         try { 
         	String responce = Utils.readUrl(vkApi + "/method/messages.get?out=0&count=20&access_token="+vkToken);
-            return (responce);
+            return responce;
         } 
         catch (IOException e)
         {
-            return ("{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения сообщений.\"}]}}");
+            return "{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения сообщений.\"}]}}";
         }  
     }
     
@@ -66,12 +66,12 @@ public class VK {
 			String name = json.get("first_name").toString();
 			String last_name = json.get("last_name").toString();
             
-            return (name + " " + last_name);
+            return name + " " + last_name;
 	        
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 			
-			return ("Неизвестный отправитель");
+			return "Неизвестный отправитель";
 		}
     }
     
@@ -89,11 +89,11 @@ public class VK {
         	Random random = new Random();
 			String responce = Utils.readUrl(vkApi + "/method/wall.get?owner_id=" + groupID + 
         			"&offset=" + random.nextInt(limit) + "&count=1&access_token="+vkToken);
-            return (responce);
+            return responce;
         } 
         catch (IOException e)
         {
-            return ("{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения постов.\"}]}}");
+            return "{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения постов.\"}]}}";
         }  
     }
     
@@ -101,12 +101,32 @@ public class VK {
         try { 
 			String responce = Utils.readUrl(vkApi + "/method/video.search?q=" + request + 
         			"&sort=2&adult=0&access_token="+vkToken);
-            return (responce);
+            return responce;
         } 
         catch (IOException e)
         {
-            return ("{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения видео.\"}]}}");
+            return "{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения видео.\"}]}}";
         }  
+    }
+    
+    public static String getRequests() {
+		try {
+			String responce = Utils.readUrl(vkApi + "/method/friends.getRequests?&access_token=" + vkToken);
+	    	return responce;
+	    	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "{response:[]}";
+    }
+    
+    public static void addFriends(Long uid) {
+		try {
+			String otvet = Utils.readUrl(vkApi + "/method/friends.add?user_id="+ uid +"&access_token=" + vkToken);
+			System.out.println(otvet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     public static String getAudioRecomendations(Integer userID, int count) {
@@ -114,11 +134,11 @@ public class VK {
 			String responce = Utils.readUrl(vkApi + "/method/audio.getRecommendations?" + userID + 
         			"&count=" + count + "&access_token="+vkToken);
 			System.out.println(responce);
-            return (responce);
+            return responce;
         } 
         catch (IOException e)
         {
-            return ("{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения аудиозаписей.\"}]}]}");
+            return "{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения аудиозаписей.\"}]}]}";
         }  
     }
 	

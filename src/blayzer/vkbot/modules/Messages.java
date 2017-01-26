@@ -3,7 +3,6 @@ package blayzer.vkbot.modules;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 import java.util.TimeZone;
 
 import org.json.simple.JSONArray;
@@ -18,12 +17,11 @@ import blayzer.vkbot.api.Utils;
 public class Messages {
 	
 	public static void Init(String uid, String[] lastMessage) throws ParseException, IOException {
-		Random random = new Random();
 		
 			if(Utils.checkMessage("привет", "здарова")) {
-				String[] answers = {"Готов служить!", "Здарова, тварына!", "Слава Украине!",
-						"Здарова, привет, привет, здарова!", "Привет, молодой!"}; 
-				VK.sendMessage(uid, answers[random.nextInt(4)], null);
+				String answer = Utils.getRandomMessage("Готов служить!", "Здарова, тварына!", "Слава Украине!",
+						"Здарова, привет, привет, здарова!", "Привет, молодой!"); 
+				VK.sendMessage(uid, answer, null);
 			}
 			else
 				if(Utils.checkMessage("луна"))
@@ -41,11 +39,11 @@ public class Messages {
 				}
 			else
 				if(Utils.checkMessage("шар", "скажи")){
-					String[] answers = {"Да", "Конечно", "Не думаю",
+					String answer = Utils.getRandomMessage("Да", "Конечно", "Не думаю",
 							"Нет", "Знаки говорят - да", "Не сомненно!",
 							"Скорее да, чем нет", "Не могу решить",
-							"Мой ответ - нет", "Да, но только если ты не смотришь аниме"}; 
-					VK.sendMessage(uid, answers[random.nextInt(9)], null);
+							"Мой ответ - нет", "Да, но только если ты не смотришь аниме");
+					VK.sendMessage(uid, answer, null);
 				}
 			else
 				if(Utils.checkMessage("напиши")) {
