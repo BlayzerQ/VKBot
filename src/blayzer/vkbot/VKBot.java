@@ -1,5 +1,7 @@
 package blayzer.vkbot;
 
+import java.util.concurrent.TimeUnit;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,19 +14,13 @@ import blayzer.vkbot.modules.Sites;
 
 public class VKBot {
 	
-	public static String prefixes = "! фб вб файнбот вкбот";
+	public static String prefixes = "!, фб, файнбот, вб, вкбот";
+	public static String blacklist = "0, 0";
 	public static String[] lastMessage;
-	//public static String[] prefixes = {"!", "фб", "файнбот", "вкбот"};
 	
 	public void Init() {
 		System.out.println("VKBot запущен! Авторизация...");
-		VK.setOnline();
 		Shedule.Init();
-		try {
-			Thread.sleep(300);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		System.out.println("Приступаю к приему сообщений.");
 		Work();
 	}
@@ -46,21 +42,23 @@ public class VKBot {
 								uid = "user_id=" + json.get("uid").toString();
 							}
 							Long status = (Long) json.get("read_state");
-							String fullMessage = (String )json.get("body");
+							String fullMessage = (String)json.get("body");
 							lastMessage = fullMessage.split(" ");
 
-							if(prefixes.contains(lastMessage[0]) && status == 0 && lastMessage.length >= 2){
-								VK.setAsRead(uid);
-								System.out.println("Сообщение от " + uid.replaceAll("_id=", " id") 
+							if(prefixes.contains(lastMessage[0].toLowerCase()) && status == 0 && lastMessage.length >= 2){
+								if(!blacklist.contains(uid)) {
+									VK.setAsRead(uid);
+									System.out.println("Сообщение от " + uid.replaceAll("_id=", " id") 
 										+ ": " + fullMessage);
 								
-								Messages.Init(uid, lastMessage);
-								Posts.Init(uid, lastMessage);
-								Sites.Init(uid, lastMessage);
+									Messages.Init(uid, lastMessage);
+									Posts.Init(uid, lastMessage);
+									Sites.Init(uid, lastMessage);
+								}
 							}
 						}
 					}
-					Thread.sleep(400);
+					TimeUnit.SECONDS.sleep(1);
 				}
 		} catch (Exception e) {
 			e.printStackTrace();

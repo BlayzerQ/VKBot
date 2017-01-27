@@ -12,7 +12,7 @@ import blayzer.vkbot.api.VK;
 public class Shedule {
 
 	public static void Init() {
-		Runnable r = () -> {
+		Runnable watchFriends = () -> {
 		 while(true) {
 			try {
 			JSONObject request = (JSONObject) new JSONParser().parse(VK.getRequests());
@@ -31,7 +31,19 @@ public class Shedule {
 		 }
 		};
 		
-		new Thread(r).start();
+		Runnable keepOnline = () -> {
+			 while(true) {
+				try {
+				VK.setOnline();
+				TimeUnit.MINUTES.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			 }
+			};
+		
+		new Thread(watchFriends).start();
+		new Thread(keepOnline).start();
 	}
 	
 }

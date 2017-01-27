@@ -37,7 +37,7 @@ public class VK {
 			}
 			
 			Utils.connect(vkApi + vkurl);
-	        System.out.println("Ответ: " + message + "\nВложение: " + attachment);
+	        System.out.println("Ответ: " + message + " Вложение: " + attachment);
 	        
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -122,8 +122,7 @@ public class VK {
     
     public static void addFriends(Long uid) {
 		try {
-			String otvet = Utils.readUrl(vkApi + "/method/friends.add?user_id="+ uid +"&access_token=" + vkToken);
-			System.out.println(otvet);
+			Utils.connect(vkApi + "/method/friends.add?user_id="+ uid +"&access_token=" + vkToken);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
