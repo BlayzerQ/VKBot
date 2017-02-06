@@ -47,7 +47,7 @@ public class Sites {
 						String USD = ratesUsd.get("RUB").toString();
 						String EUR = ratesEur.get("RUB").toString();
 
-						VK.sendMessage(uid, "1 Доллар = " + USD + "\n1 Евро = " + EUR +
+						VK.sendMessage(uid, "1 Доллар = " + USD + "руб." + "\n1 Евро = " + EUR + "руб." +
 								"\n40 евро = " + Float.valueOf(EUR)*40, null);
 
 					}

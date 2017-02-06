@@ -9,14 +9,15 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class VK { 
-	static String vkToken = "9822c84f64a7838474bd0de7b8afab4160ed3bbbe15d697d946e9d89776b32760b39c929dd1122e5da332";
+	static String vkToken = "80edcac8c0984a3a732ae0ad281176a5375fe536c15ed310a09658ba38e06b5d33ebd82ef94024e3b6880";
     static String vkApi= "https://api.vk.com";
     
     public static String getMessages() {
 
-        try { 
-        	String responce = Utils.readUrl(vkApi + "/method/messages.get?out=0&count=20&access_token="+vkToken);
-            return responce;
+        try {
+        	String response = Utils.readUrl(vkApi + "/method/messages.get?out=0&count=20&access_token="+vkToken+"&v=5.62");
+        	//System.out.println(response);
+            return response;
         } 
         catch (IOException e)
         {
@@ -31,14 +32,14 @@ public class VK {
 			StringBuilder vkurl =  new StringBuilder();
 			vkurl.append("/method/messages.send?" +
 						uid +"&message=" + Utils.fixString(message) + "&random_id=" + random.nextInt()
-						+ "&v=5.45&access_token=" + vkToken);
+						+ "&v=5.45&access_token="+vkToken+"&v=5.62");
 			if(attachment != null) {
 				vkurl.append("&attachment=" + attachment);
 			}
 			
 			Utils.connect(vkApi + vkurl);
 	        System.out.println("Ответ: " + message + " Вложение: " + attachment);
-	        
+            //System.out.println(response);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -48,7 +49,7 @@ public class VK {
     	
 		try {
 			Utils.connect(vkApi + "/method/messages.markAsRead?peer_id=" +
-					uid + "&access_token="+vkToken);
+					uid + "&access_token="+vkToken+"&v=5.62");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -58,7 +59,7 @@ public class VK {
     	
 		try {
 			String responce = Utils.readUrl(vkApi + "/method/users.get?" +
-					uid + "&access_token="+vkToken);
+					uid + "&access_token="+vkToken+"&v=5.62");
             
 			JSONObject messages = (JSONObject) new JSONParser().parse(responce);
 			JSONArray response = (JSONArray) messages.get("response");
@@ -78,7 +79,7 @@ public class VK {
     public static void setOnline () {
     	
 		try {
-			Utils.connect(vkApi + "/method/account.setOnline?access_token="+vkToken);
+			Utils.connect(vkApi + "/method/account.setOnline?access_token="+vkToken+"&v=5.62");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -88,7 +89,7 @@ public class VK {
         try { 
         	Random random = new Random();
 			String responce = Utils.readUrl(vkApi + "/method/wall.get?owner_id=" + groupID + 
-        			"&offset=" + random.nextInt(limit) + "&count=1&access_token="+vkToken);
+        			"&offset=" + random.nextInt(limit) + "&count=1&access_token="+vkToken+"&v=5.62");
             return responce;
         } 
         catch (IOException e)
@@ -100,7 +101,7 @@ public class VK {
     public static String searchVideo(String request) {
         try { 
 			String responce = Utils.readUrl(vkApi + "/method/video.search?q=" + request + 
-        			"&sort=2&adult=0&access_token="+vkToken);
+        			"&sort=2&adult=0&access_token="+vkToken+"&v=5.62");
             return responce;
         } 
         catch (IOException e)
@@ -111,7 +112,8 @@ public class VK {
     
     public static String getRequests() {
 		try {
-			String responce = Utils.readUrl(vkApi + "/method/friends.getRequests?&access_token=" + vkToken);
+			String responce = Utils.readUrl(vkApi + "/method/friends.getRequests?&access_token="+vkToken+"&v=5.62");
+			//System.out.println(responce);
 	    	return responce;
 	    	
 		} catch (IOException e) {
@@ -122,23 +124,10 @@ public class VK {
     
     public static void addFriends(Long uid) {
 		try {
-			Utils.connect(vkApi + "/method/friends.add?user_id="+ uid +"&access_token=" + vkToken);
+			Utils.connect(vkApi + "/method/friends.add?user_id="+ uid +"&access_token="+vkToken+"&v=5.62");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    }
-    
-    public static String getAudioRecomendations(Integer userID, int count) {
-        try {
-			String responce = Utils.readUrl(vkApi + "/method/audio.getRecommendations?" + userID + 
-        			"&count=" + count + "&access_token="+vkToken);
-			System.out.println(responce);
-            return responce;
-        } 
-        catch (IOException e)
-        {
-            return "{response: [{\"count\": 38889,\"items\": [{\"body\": \"Ошибка получения аудиозаписей.\"}]}]}";
-        }  
     }
 	
 }

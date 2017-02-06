@@ -18,7 +18,7 @@ public class Posts {
 		if(lastMessage.length >= 1) {
 			if(Utils.checkMessage("двач")) {
 				JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-22751485, 1985));
-				JSONArray response = (JSONArray) messages.get("response");
+				JSONObject response = (JSONObject) messages.get("response");
 					if(response != null) {
 						if(response != null) {
 							String answer = Utils.getRandomMessage("Свежак с Двача!", "Ну держи!",
@@ -30,7 +30,7 @@ public class Posts {
 			else
 				if(Utils.checkMessage("мемы")) {
 					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-87960594, 1985));
-					JSONArray response = (JSONArray) messages.get("response");
+					JSONObject response = (JSONObject) messages.get("response");
 						if(response != null) {
 							if(response != null) {
 								String answer = Utils.getRandomMessage("Мемосы!", "Мемы поданы!", "&#127770;");
@@ -42,7 +42,7 @@ public class Posts {
 			else
 				if(Utils.checkMessage("шк")) {
 					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-83971955, 1985));
-					JSONArray response = (JSONArray) messages.get("response");
+					JSONObject response = (JSONObject) messages.get("response");
 						if(response != null) {
 							if(response != null) {
 								String answer = Utils.getRandomMessage("Я тут выбрал, посмотри", "Вот, держи!",
@@ -55,7 +55,7 @@ public class Posts {
 			else
 				if(Utils.checkMessage("сиськи")) {
 					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-20282193, 800));
-					JSONArray response = (JSONArray) messages.get("response");
+					JSONObject response = (JSONObject) messages.get("response");
 						if(response != null) {
 							if(response != null) {
 								String answer = Utils.getRandomMessage("Ну держи!", "Сиськи поданы!", "&#127770;");
@@ -67,7 +67,7 @@ public class Posts {
 			else
 				if(Utils.checkMessage("фм")) {
 					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-35140461, 1100));
-					JSONArray response = (JSONArray) messages.get("response");
+					JSONObject response = (JSONObject) messages.get("response");
 						if(response != null) {
 							if(response != null) {
 								String answer = Utils.getRandomMessage("Я сам смотреть не буду, но вы смотрите",
@@ -80,7 +80,7 @@ public class Posts {
 			else
 				if(Utils.checkMessage("шкуры")) {
 					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-83971955, 1985));
-					JSONArray response = (JSONArray) messages.get("response");
+					JSONObject response = (JSONObject) messages.get("response");
 						if(response != null) {
 							String answer = Utils.getRandomMessage("Как вам эта?", "Вроде ничего так...",
 									"Баллов на " + random.nextInt(10) + " из 10", "Вот, держи!");

@@ -16,7 +16,7 @@ public class Shedule {
 		 while(true) {
 			try {
 			JSONObject request = (JSONObject) new JSONParser().parse(VK.getRequests());
-			JSONArray response = (JSONArray) request.get("response");
+			JSONObject response = (JSONObject) request.get("response");
 			if(response != null) {
 				for(int i = 0; i < response.size(); i++) {
 					Long item = (Long) response.get(i);
@@ -24,7 +24,7 @@ public class Shedule {
 				}
 			}
 			
-			TimeUnit.SECONDS.sleep(1);
+			TimeUnit.SECONDS.sleep(3);
 			} catch (InterruptedException | ParseException e) {
 				e.printStackTrace();
 			}

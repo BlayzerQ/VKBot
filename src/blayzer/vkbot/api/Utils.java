@@ -51,15 +51,17 @@ public class Utils {
 		} return false;
 	}
 	
-	public static String getAttachMedia(JSONArray response) {
-		JSONObject json = (JSONObject) response.get(1);
+	public static String getAttachMedia(JSONObject response) {
+		JSONArray items = (JSONArray) response.get("items");
+		System.out.println(items);
+		JSONObject json = (JSONObject) items.get(0);
 		JSONArray att = (JSONArray) json.get("attachments");
 		if(att != null) {
 		JSONObject photo = (JSONObject) att.get(0);
 		JSONObject media = (JSONObject) photo.get("photo");
 		String owner_id = media.get("owner_id").toString();
 		String type = photo.get("type").toString();
-		String att_id = media.get("pid").toString();
+		String att_id = media.get("id").toString();
 		String key = media.get("access_key").toString();
 		String attachment = type + owner_id + "_" + att_id + "_" + key;
 		
