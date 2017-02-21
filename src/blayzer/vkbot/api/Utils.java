@@ -8,6 +8,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Random;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,6 +17,21 @@ import org.json.simple.JSONObject;
 import blayzer.vkbot.VKBot;
 
 public class Utils {
+	
+	public static Logger log = Logger.getLogger("logger");
+	
+	static {
+		try {
+			log.addHandler(new FileHandler("VKBot.log"));
+			log.setUseParentHandlers(false);
+		} catch (Exception e) {
+			System.err.println("Could not return a static logger");
+		}
+	}
+	
+	public static Logger getLogger() {
+		return log;
+	}
 
 	public static String readUrl(String url) throws IOException {
 		

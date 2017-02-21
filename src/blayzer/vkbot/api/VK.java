@@ -17,6 +17,7 @@ public class VK {
         try {
         	String response = Utils.readUrl(vkApi + "/method/messages.get?out=0&count=20&access_token="+vkToken+"&v=5.62");
         	//System.out.println(response);
+	        Utils.log.info(response);
             return response;
         } 
         catch (IOException e)
@@ -37,9 +38,10 @@ public class VK {
 				vkurl.append("&attachment=" + attachment);
 			}
 			
-			Utils.connect(vkApi + vkurl);
+			String response = Utils.readUrl(vkApi + vkurl);
 	        System.out.println("Ответ: " + message + " Вложение: " + attachment);
             //System.out.println(response);
+	        Utils.log.info(response);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -48,8 +50,13 @@ public class VK {
     public static void setAsRead (String uid) {
     	
 		try {
+			if(uid.contains("chat_id")){
 			Utils.connect(vkApi + "/method/messages.markAsRead?peer_id=" +
-					uid + "&access_token="+vkToken+"&v=5.62");
+					uid.replace("chat_id=", "2000000000") + "&access_token="+vkToken+"&v=5.62");
+			} else {
+			Utils.connect(vkApi + "/method/messages.markAsRead?peer_id=" +
+					uid.replace("user_id=", "") + "&access_token="+vkToken+"&v=5.62");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

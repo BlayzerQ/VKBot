@@ -75,7 +75,7 @@ public class Messages {
 				}
 			else
 				if(Utils.checkMessage("расписание")) {
-				    if(lastMessage.length > 9.40-11.10) {
+				    if(lastMessage.length > 2) {
 					if(lastMessage[2].equalsIgnoreCase("понедельник")){
 						String result = "Верхняя неделя:\n 8.00-9.30) Окно\n 9.40-11.10) Окно\n 11.20-12.50) Математика\n 13.00-14.30) Окно\n 14.40-16.10) ИИКГ\n\n"
 									  + "Нижняя неделя:\n 8.00-9.30) Окно\n 9.40-11.10) Окно\n 11.20-12.50) Математика\n 13.00-14.30) Химия\n 14.40-16.10) Окно";
@@ -110,18 +110,14 @@ public class Messages {
 				if(Utils.checkMessage("найди")) {
 					if(VKBot.lastMessage.length > 2) {
 						JSONObject request = (JSONObject) new JSONParser().parse(VK.searchVideo(VKBot.lastMessage[2]));
-						JSONArray response = (JSONArray) request.get("response");
+						JSONObject response = (JSONObject) request.get("response");
+						System.out.println(response);
 							if(response != null) {
-								System.out.println(response);
-								JSONObject json = (JSONObject) response.get(1);
-								System.out.println(json);
-								if(json != null) {
-									String owner_id = json.get("owner_id").toString();
-									String id = json.get("id").toString();
+								JSONArray items = (JSONArray) response.get("items");
+								JSONObject json = (JSONObject) items.get(0);
+								String owner_id = json.get("owner_id").toString();
+								String id = json.get("id").toString();
 								VK.sendMessage(uid, "Вот, что я нашел", "video" + owner_id + "_" + id);
-								} else {
-									VK.sendMessage(uid, "Ошибка поиска", null);
-								}
 
 							}
 					} else
