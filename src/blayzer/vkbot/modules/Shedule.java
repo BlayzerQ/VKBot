@@ -18,8 +18,9 @@ public class Shedule {
 			JSONObject request = (JSONObject) new JSONParser().parse(VK.getRequests());
 			JSONObject response = (JSONObject) request.get("response");
 			if(response != null) {
-				for(int i = 0; i < response.size(); i++) {
-					Long item = (Long) response.get(i);
+				JSONArray items = (JSONArray) response.get("items");
+				for(int i = 0; i < items.size(); i++) {
+					Long item = (Long) items.get(i);
 					VK.addFriends(item);
 				}
 			}

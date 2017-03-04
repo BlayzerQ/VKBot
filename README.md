@@ -40,6 +40,8 @@ VKBot
 * Для того, чтобы узнать ID пользователя или паблика, используйте https://vk.com/linkapp
 * Для того, чтобы узнать access_token, используйте https://oauth.vk.com/authorize?client_id=5503810&scope=offline,notify,friends,photos,audio,video,pages,status,notes,messages,wall,docs,groups,notifications,stats,email&display=page&response_type=token&redirect_uri=https://oauth.vk.com/blank.html
 
+*Если полсле запуска бота, авторизации в ВК не происходит, включите отладку и скопируйте ссылку из текста ошибки, открыв ссылку на подтверджение валидации через текстовый браузер links в Debian и пройдите проверку.
+
 ## Создание модулей:
 * В папке modules находятся классы отвечающие за функционал, добавить новые или изменить существующие можно по их примеру
 * Инициализация модулей происходит в главном классе мода

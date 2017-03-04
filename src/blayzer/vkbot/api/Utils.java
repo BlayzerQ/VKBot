@@ -76,6 +76,9 @@ public class Utils {
 		if(att != null) {
 		JSONObject photo = (JSONObject) att.get(0);
 		JSONObject media = (JSONObject) photo.get("photo");
+		if(media == null) {
+			return null;
+		}
 		String owner_id = media.get("owner_id").toString();
 		String type = photo.get("type").toString();
 		String att_id = media.get("id").toString();
