@@ -69,8 +69,6 @@ public class Sites {
 							String onlineAll = onlineUrl.get("online").toString();
 							String recordDay = onlineUrl.get("recordday").toString();
 							String record = onlineUrl.get("record").toString();
-				            
-				            System.out.println(onlineUrl);
 							
 							VK.sendMessage(uid, "HardTech: " + htOnline + "\nTechnoMagic: " + tmOnline +
 									"\nMagicRPG: " + magicOnline + "\nОбщий онлайн: " + onlineAll +

@@ -1,6 +1,7 @@
 package blayzer.vkbot.api;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -9,7 +10,9 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Random;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,19 +21,21 @@ import blayzer.vkbot.VKBot;
 
 public class Utils {
 	
-	public static Logger log = Logger.getLogger("logger");
+	public static Logger log = Logger.getLogger(VKBot.class.getName());
 	
-	static {
+	public static void logging(Level level, String message) {
 		try {
-			log.addHandler(new FileHandler("VKBot.log"));
-			log.setUseParentHandlers(false);
-		} catch (Exception e) {
-			System.err.println("Could not return a static logger");
+			File file = new File("logs");
+			if (!file.exists()) {
+			    file.mkdir();
+			}
+			FileHandler logfile = new FileHandler("logs/VKBot.log");
+			logfile.setFormatter(new SimpleFormatter());
+			log.addHandler(logfile);
+			log.log(level, message);
+		} catch (SecurityException | IOException e) {
+			e.printStackTrace();
 		}
-	}
-	
-	public static Logger getLogger() {
-		return log;
 	}
 
 	public static String readUrl(String url) throws IOException {
@@ -43,7 +48,10 @@ public class Utils {
                 new InputStreamReader(conVkGetURL.getInputStream(), "UTF-8"));
         String inputLine = in.readLine();
         in.close();
-		
+        
+        if(VKBot.debug)
+		logging(Level.INFO, inputLine);
+        
 		return inputLine;
 		
 	}
@@ -55,6 +63,10 @@ public class Utils {
         conVkGetURL.setConnectTimeout(2000);
         
         InputStreamReader in = new InputStreamReader(conVkGetURL.getInputStream(), "UTF-8");
+        
+        if(VKBot.debug)
+		logging(Level.INFO, new BufferedReader(in).toString());
+        
         in.close();
 	}
 	
