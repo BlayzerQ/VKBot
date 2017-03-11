@@ -20,5 +20,28 @@ public class Chat {
 					"Здарова, привет, привет, здарова!", "Привет, молодой!"); 
 			VK.sendMessage(uid, answer, null);
 		}
+		else
+		if(Utils.checkChatMessage("как дела", "как настроение", "как ты")) {
+			String answer = Utils.getRandomMessage("Все отлично! Сам как?", "Все прекрасно!", "В порядке",
+					"Мне всегда хорошо. Я же бот.", "Получше некоторых"); 
+			VK.sendMessage(uid, answer, null);
+		}
+		else
+		if(Utils.checkChatMessage("что делаешь", "чем занимаешься")) {
+			String answer = Utils.getRandomMessage("Читаю сообщения от всяких придурков", "Читаю", "В ВК залипаю",
+					"Ничего", "Мемы смотрю"); 
+			VK.sendMessage(uid, answer, null);
+		}
+		else
+		if(Utils.checkChatMessage("хорошо", "окей", "ладно", "пусть", "принято", "как скажешь")) {
+			String answer = Utils.getRandomMessage("Вот и отлично!", "Здорово!", "Вот и договорились",
+					"Великолепно!", "Рад, что ты понял. Тупой дибил."); 
+			VK.sendMessage(uid, answer, null);
+		}
+		else {
+			String answer = Utils.getRandomMessage("Я не буду отвечать", "Я ничего не знаю об этом", "Заткнись",
+					"Давай поговорим о другом?", "Я не знаю что тебе ответить", "Охуел что ли, такое писать?", "Ты в своем уме?"); 
+			VK.sendMessage(uid, answer, null);
+		}
 	}
 }

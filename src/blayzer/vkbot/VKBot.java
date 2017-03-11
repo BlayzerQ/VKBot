@@ -25,6 +25,7 @@ public class VKBot {
 	public static String wordsBlacklist = "цп, лоли, дп";
 	public static String blacklist = "0, 0";
 	public static boolean debug = false;
+	public static boolean chat = false;
 	public static String[] lastMessage;
 	
 	public void Init() {
@@ -36,6 +37,7 @@ public class VKBot {
 			blacklist = config.getProperty("blacklist");
 			wordsBlacklist = config.getProperty("wordsBlacklist");
 			debug = Boolean.valueOf(config.getProperty("debug"));
+			chat = Boolean.valueOf(config.getProperty("chat"));
 			vkToken = config.getProperty("vkToken");
 		} catch (IOException e) {
 			Utils.logging(Level.WARNING, "Не найден файл конфигурации. Будут использованы стандартные значения.");
@@ -67,7 +69,7 @@ public class VKBot {
 							lastMessage = fullMessage.split(" ");
 							
 							//Обработка сообщений без префиксов
-							if(status == 0) {
+							if(status == 0 && chat) {
 								Chat.Init(uid, lastMessage);
 							}
 							
