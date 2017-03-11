@@ -1,6 +1,10 @@
 package blayzer.vkbot.api;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 
@@ -12,7 +16,9 @@ import org.json.simple.parser.ParseException;
 import blayzer.vkbot.VKBot;
 
 public class VK {
-    static String vkApi= "https://api.vk.com";
+	
+    private static String vkApi= "https://api.vk.com";
+    private static Random random = new Random();
     
     public static String getMessages() {
 
@@ -43,6 +49,61 @@ public class VK {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    }
+    
+    public static String uploadDoc (String filename) {
+    	File file = new File(Utils.data.getAbsolutePath() + "/" + filename + ".mp3");
+    	try {
+        	Utils.speech(filename);
+			String server = Utils.readUrl(vkApi + "/method/docs.getUploadServer?access_token="+VKBot.vkToken+"&type=audio_message&v=5.62");
+			JSONObject object = (JSONObject) new JSONParser().parse(server);
+			JSONObject response = (JSONObject) object.get("response");
+			String url = (String) response.get("upload_url");
+			
+			MultipartUtility multipart = new MultipartUtility(url, "UTF-8");
+			multipart.addFilePart("file", file);
+			
+			List<String> multi = multipart.finish();
+			String fileUpl = "";
+            for (String line : multi) {
+                JSONObject obj3 = (JSONObject) new JSONParser().parse(line.toString());
+                fileUpl = (String) obj3.get("file");
+            }
+            String respsave = Utils.readUrl("https://api.vk.com/method/docs.save?file=" +fileUpl +"&access_token="+VKBot.vkToken+"&v=5.60");
+            JSONObject json = (JSONObject) new JSONParser().parse(respsave);
+            JSONArray endresponse = (JSONArray) json.get("response");
+            if(endresponse != null) {
+            JSONObject items = (JSONObject) endresponse.get(0);
+            Long owner_id = (Long) items.get("owner_id");
+            Long id = (Long) items.get("id");
+            return "doc" + owner_id + "_" + id;
+            }
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+		return "doc" + null + "_" + null;
+    }
+    
+    public static String docSearch (String text) {
+    	try {
+			String request = Utils.readUrl(vkApi + "/method/docs.search?q="+text+"&count=10"+"&offset="+random.nextInt(300)+"&access_token="+VKBot.vkToken+"&v=5.60");
+			JSONObject json = (JSONObject) new JSONParser().parse(request);
+			JSONObject response = (JSONObject) json.get("response");
+			if(response != null) {
+			JSONArray items = (JSONArray) response.get("items");
+			if(items.size() == 0) {
+				return "Ничего не найдено";
+			}
+			JSONObject doc = (JSONObject) items.get(0);
+			Long owner_id = (Long) doc.get("owner_id");
+			Long id = (Long) doc.get("id");
+			return "doc" + owner_id + "_" + id;
+			}
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+    	return "doc" + null + "_" + null;
+    	
     }
     
     public static void setAsRead (String uid) {

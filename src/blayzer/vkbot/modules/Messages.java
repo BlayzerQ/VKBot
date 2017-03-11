@@ -53,7 +53,7 @@ public class Messages {
 					    }
 				}
 			else
-				if(Utils.checkMessage("шар", "скажи")){
+				if(Utils.checkMessage("шар")){
 					String answer = Utils.getRandomMessage("Да", "Конечно", "Не думаю",
 							"Нет", "Знаки говорят - да", "Несомненно!",
 							"Скорее да, чем нет", "Не могу решить",
@@ -111,7 +111,9 @@ public class Messages {
 					if(VKBot.lastMessage.length > 2) {
 						JSONObject request = (JSONObject) new JSONParser().parse(VK.searchVideo(VKBot.lastMessage[2]));
 						JSONObject response = (JSONObject) request.get("response");
-						System.out.println(response);
+							if(VKBot.wordsBlacklist.contains(VKBot.lastMessage[2].toLowerCase())) {
+								VK.sendMessage(uid, "Я не смог это найти", null);
+							} else
 							if(response != null) {
 								JSONArray items = (JSONArray) response.get("items");
 								JSONObject json = (JSONObject) items.get(0);
@@ -123,5 +125,30 @@ public class Messages {
 					} else
 						VK.sendMessage(uid, "Что мне искать?", null);
 				}
+			else
+				if(Utils.checkMessage("скажи")) {
+					if(VKBot.lastMessage.length > 2) {
+						StringBuilder answer = new StringBuilder();
+						for(int i=2; i < VKBot.lastMessage.length; i++) {
+							answer.append(VKBot.lastMessage[i]);
+						}
+						VK.sendMessage(uid, "", VK.uploadDoc(answer.toString()));
+					} else
+						VK.sendMessage(uid, "Что мне сказать?", null);
+				}
+			else
+				if(Utils.checkMessage("гиф", "гифка", "документ")) {
+					if(VKBot.lastMessage.length > 2) {
+						StringBuilder answer = new StringBuilder();
+						for(int i=2; i < VKBot.lastMessage.length; i++) {
+							answer.append(VKBot.lastMessage[i].toLowerCase());
+						}
+						if(VK.docSearch(answer.toString()) == "Ничего не найдено" || VKBot.wordsBlacklist.contains(answer)) {
+							VK.sendMessage(uid, "Я не смог это найти", null);
+						} else
+						VK.sendMessage(uid, "", VK.docSearch(answer.toString()));
+					} else
+						VK.sendMessage(uid, "Что мне искать?", null);
+				}	
 	}
 }

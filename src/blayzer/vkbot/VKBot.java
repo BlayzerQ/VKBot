@@ -1,10 +1,7 @@
 package blayzer.vkbot;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -16,6 +13,7 @@ import org.json.simple.parser.JSONParser;
 import blayzer.vkbot.api.Utils;
 import blayzer.vkbot.api.VK;
 import blayzer.vkbot.modules.Posts;
+import blayzer.vkbot.modules.Chat;
 import blayzer.vkbot.modules.Messages;
 import blayzer.vkbot.modules.Shedule;
 import blayzer.vkbot.modules.Sites;
@@ -24,6 +22,7 @@ public class VKBot {
 	
 	public static String prefixes = "!, фб, файнбот, вб, вкбот";
 	public static String vkToken = "";
+	public static String wordsBlacklist = "цп, лоли, дп";
 	public static String blacklist = "0, 0";
 	public static boolean debug = false;
 	public static String[] lastMessage;
@@ -35,6 +34,7 @@ public class VKBot {
 			config.load(new FileInputStream("config.properties"));
 			prefixes = config.getProperty("prefixes");
 			blacklist = config.getProperty("blacklist");
+			wordsBlacklist = config.getProperty("wordsBlacklist");
 			debug = Boolean.valueOf(config.getProperty("debug"));
 			vkToken = config.getProperty("vkToken");
 		} catch (IOException e) {
@@ -65,7 +65,13 @@ public class VKBot {
 							Long status = (Long) json.get("read_state");
 							String fullMessage = (String)json.get("body");
 							lastMessage = fullMessage.split(" ");
-
+							
+							//Обработка сообщений без префиксов
+							if(status == 0) {
+								Chat.Init(uid, lastMessage);
+							}
+							
+							//Обработка сообщений с префиксами
 							if(prefixes.contains(lastMessage[0]) && status == 0 && lastMessage.length >= 2){
 								if(!blacklist.contains(uid)) {
 									VK.setAsRead(uid);
@@ -82,7 +88,8 @@ public class VKBot {
 					TimeUnit.SECONDS.sleep(1);
 				}
 		} catch (Exception e) {
-			Utils.logging(Level.SEVERE, e.getStackTrace().toString());
+			e.printStackTrace();
+			Utils.logging(Level.SEVERE, e.getMessage());
 		}
 	}
 
