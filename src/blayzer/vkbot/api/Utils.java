@@ -34,7 +34,7 @@ public class Utils {
 			if (!file.exists()) {
 			    file.mkdir();
 			}
-			FileHandler logfile = new FileHandler("logs/VKBot.log");
+			FileHandler logfile = new FileHandler("logs/VKBot.log", 10240, 5, true);
 			logfile.setFormatter(new SimpleFormatter());
 			log.addHandler(logfile);
 			log.log(level, message);

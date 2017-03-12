@@ -1,7 +1,10 @@
 package blayzer.vkbot;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -32,7 +35,8 @@ public class VKBot {
 		Utils.logging(Level.INFO, "VKBot запускается...");
 		Properties config = new Properties();
 		try {
-			config.load(new FileInputStream("config.properties"));
+			BufferedReader configFile = new BufferedReader(new InputStreamReader(new FileInputStream("config.properties"), "UTF8"));
+			config.load(configFile);
 			prefixes = config.getProperty("prefixes");
 			blacklist = config.getProperty("blacklist");
 			wordsBlacklist = config.getProperty("wordsBlacklist");

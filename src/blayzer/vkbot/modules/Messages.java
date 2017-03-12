@@ -36,7 +36,7 @@ public class Messages {
 				if(Utils.checkMessage("команды"))
 						VK.sendMessage(uid, "Список доступных команд: \nпривет, \nлуна, \nкоманды,"
 								+ "\nвремя, \nшар, \nдвач, \nмемы, \nшк, \nсиськи, \nфм, \nрасписание, \nнеделя"
-								+ "\nонлайн, \nшкуры, \nкурс, \nнайди, \nнапиши, \nпошути", null);
+								+ "\nонлайн, \nшкуры, \nкурс, \nнайди, \nнапиши, \nпошути, \nскажи, \nгиф", null);
 			else
 				if(Utils.checkMessage("время")) {
 					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
