@@ -1,6 +1,7 @@
 package blayzer.vkbot.api;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -122,7 +124,34 @@ public class Utils {
 		return words[random.nextInt(words.length)];
 	}
 	
-    public static void speech(String text) throws IOException {
+//    public static void speech(String text) throws IOException {
+//        String uri = "http://tts.voicetech.yandex.net/generate?text="
+//                + URLEncoder.encode(text, "utf-8")
+//                + "&format=mp3"
+//                + "&lang=ru-RU"
+//                + "&speaker=oksana"
+//                + "&key=f540e9a9-9641-446c-a0bc-916ce0ecb9ea";
+//        
+//        URL url = new URL(uri);
+//        HttpURLConnection conn = (HttpURLConnection)(url.openConnection());
+//        conn.setRequestMethod("GET");
+//        
+//        try (InputStream inp = conn.getInputStream()) {
+//        	
+//			if (!data.exists()) {
+//				data.mkdir();
+//			}
+//            try (OutputStream f = new FileOutputStream(data.getAbsolutePath() + "/" + text + ".mp3")) {
+//                byte[] buf = new byte[65536];
+//                int len;
+//                while ((len = inp.read(buf)) >= 0) {
+//                    f.write(buf, 0, len);
+//                }
+//            }
+//        }
+//    }
+    
+    public static byte[] speech(String text) throws IOException {
         String uri = "http://tts.voicetech.yandex.net/generate?text="
                 + URLEncoder.encode(text, "utf-8")
                 + "&format=mp3"
@@ -133,20 +162,15 @@ public class Utils {
         URL url = new URL(uri);
         HttpURLConnection conn = (HttpURLConnection)(url.openConnection());
         conn.setRequestMethod("GET");
-        
-        try (InputStream inp = conn.getInputStream()) {
-        	
-			if (!data.exists()) {
-				data.mkdir();
-			}
-            try (OutputStream f = new FileOutputStream(data.getAbsolutePath() + "/" + text + ".mp3")) {
-                byte[] buf = new byte[65536];
-                int len;
-                while ((len = inp.read(buf)) >= 0) {
-                    f.write(buf, 0, len);
-                }
-            }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        InputStream inp = conn.getInputStream();
+        byte[] buf = new byte[4096];
+        int bytesRead;
+        while ((bytesRead = inp.read(buf)) >= 0) {
+            baos.write(buf, 0, bytesRead);
         }
+        
+        return baos.toByteArray();
     }
 	
     public static String fixString(String component) {

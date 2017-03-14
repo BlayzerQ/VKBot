@@ -52,16 +52,17 @@ public class VK {
     }
     
     public static String uploadDoc (String filename) {
-    	File file = new File(Utils.data.getAbsolutePath() + "/" + filename + ".mp3");
+    	//File file = new File(Utils.data.getAbsolutePath() + "/" + filename + ".mp3");
     	try {
-        	Utils.speech(filename);
+        	//Utils.speech(filename);
 			String server = Utils.readUrl(vkApi + "/method/docs.getUploadServer?access_token="+VKBot.vkToken+"&type=audio_message&v=5.62");
 			JSONObject object = (JSONObject) new JSONParser().parse(server);
 			JSONObject response = (JSONObject) object.get("response");
 			String url = (String) response.get("upload_url");
 			
 			MultipartUtility multipart = new MultipartUtility(url, "UTF-8");
-			multipart.addFilePart("file", file);
+			//multipart.addFilePart("file", file);
+			multipart.addBytesPart("file", Utils.speech(filename));
 			
 			List<String> multi = multipart.finish();
 			String fileUpl = "";

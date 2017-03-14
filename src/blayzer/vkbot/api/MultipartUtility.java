@@ -1,6 +1,7 @@
 package blayzer.vkbot.api;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -90,6 +91,40 @@ class MultipartUtility {
         writer.flush();
 
         FileInputStream inputStream = new FileInputStream(uploadFile);
+        byte[] buffer = new byte[4096];
+        int bytesRead = -1;
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+        outputStream.flush();
+        inputStream.close();
+
+        writer.append(LINE_FEED);
+        writer.flush();
+    }
+    
+    /**
+     * Adds a upload file section to the request
+     * @param fieldName name attribute in <input type="file" name="..." />
+     * @param uploadFile a File to be uploaded
+     * @throws IOException
+     */
+    public void addBytesPart(String fieldName, byte[] bytes)
+            throws IOException {
+        writer.append("--" + boundary).append(LINE_FEED);
+        writer.append(
+                "Content-Disposition: form-data; name=\"" + fieldName
+                        + "\"; filename=\"" + bytes.toString() + "\"")
+                .append(LINE_FEED);
+        writer.append(
+                "Content-Type: "
+                        + URLConnection.guessContentTypeFromName(bytes.toString()))
+                .append(LINE_FEED);
+        writer.append("Content-Transfer-Encoding: binary").append(LINE_FEED);
+        writer.append(LINE_FEED);
+        writer.flush();
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
         byte[] buffer = new byte[4096];
         int bytesRead = -1;
         while ((bytesRead = inputStream.read(buffer)) != -1) {

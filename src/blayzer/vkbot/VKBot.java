@@ -54,7 +54,6 @@ public class VKBot {
 	public void Work(){
 		try {
 			while(true){
-				
 				JSONObject messages = (JSONObject) new JSONParser().parse(VK.getMessages());
 				JSONObject response = (JSONObject) messages.get("response");
 					if(response != null) {
