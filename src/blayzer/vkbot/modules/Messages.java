@@ -36,7 +36,7 @@ public class Messages {
 				if(Utils.checkMessage("команды"))
 						VK.sendMessage(uid, "Список доступных команд: \nпривет, \nлуна, \nкоманды,"
 								+ "\nвремя, \nшар, \nдвач, \nмемы, \nшк, \nсиськи, \nфм, \nрасписание, \nнеделя"
-								+ "\nонлайн, \nшкуры, \nкурс, \nнайди, \nнапиши, \nпошути, \nскажи, \nгиф", null);
+								+ "\nонлайн, \nшкуры, \nкурс, \nнайди, \nнапиши, \nпошути, \nскажи, \nгиф, \nсократи", null);
 			else
 				if(Utils.checkMessage("время")) {
 					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
@@ -62,7 +62,10 @@ public class Messages {
 				}
 			else
 				if(Utils.checkMessage("сократи")){
+					if(VKBot.lastMessage.length > 2) {
 					VK.sendMessage(uid, VK.getShortLink(VKBot.lastMessage[2]), null);
+					} else
+						VK.sendMessage(uid, "Какую ссылку мне сократить?", null);
 				}
 			else
 				if(Utils.checkMessage("напиши")) {
