@@ -11,8 +11,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import blayzer.vkbot.VKBot;
-import blayzer.vkbot.api.VK;
-import blayzer.vkbot.api.Utils;
+import blayzer.vkbot.utils.Utils;
+import blayzer.vkbot.utils.VK;
 
 public class Messages {
 	

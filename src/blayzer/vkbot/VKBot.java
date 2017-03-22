@@ -13,13 +13,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import blayzer.vkbot.api.Utils;
-import blayzer.vkbot.api.VK;
 import blayzer.vkbot.modules.Posts;
 import blayzer.vkbot.modules.Chat;
 import blayzer.vkbot.modules.Messages;
 import blayzer.vkbot.modules.Shedule;
 import blayzer.vkbot.modules.Sites;
+import blayzer.vkbot.utils.Utils;
+import blayzer.vkbot.utils.VK;
 
 public class VKBot {
 	

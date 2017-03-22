@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
 
-import blayzer.vkbot.api.Utils;
-import blayzer.vkbot.api.VK;
+import blayzer.vkbot.utils.Utils;
+import blayzer.vkbot.utils.VK;
 
 public class Chat {
 
@@ -21,8 +21,8 @@ public class Chat {
 			VK.sendMessage(uid, answer, null);
 		}
 		else
-			if(Utils.checkMessage("🌚"))
-				VK.sendMessage(uid, "&#127770;", null);
+		if(Utils.checkMessage("🌚"))
+			VK.sendMessage(uid, "&#127770;", null);
 //		else
 //		if(Utils.checkChatMessage("как дела", "как настроение", "как ты")) {
 //			String answer = Utils.getRandomMessage("Все отлично! Сам как?", "Все прекрасно!", "В порядке",

@@ -10,8 +10,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import blayzer.vkbot.api.Utils;
-import blayzer.vkbot.api.VK;
+import blayzer.vkbot.utils.Utils;
+import blayzer.vkbot.utils.VK;
 
 public class Sites {
 	

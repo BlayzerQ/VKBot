@@ -1,4 +1,4 @@
-package blayzer.vkbot.api;
+package blayzer.vkbot.utils;
 
 import java.io.File;
 import java.io.IOException;

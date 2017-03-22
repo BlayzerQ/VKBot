@@ -1,4 +1,4 @@
-package blayzer.vkbot.api;
+package blayzer.vkbot.utils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -36,7 +36,7 @@ public class Utils {
 			if (!file.exists()) {
 			    file.mkdir();
 			}
-			FileHandler logfile = new FileHandler("logs/VKBot.log", 10240, 5, true);
+			FileHandler logfile = new FileHandler("logs/VKBot.log", 60240, 3, true);
 			logfile.setFormatter(new SimpleFormatter());
 			log.addHandler(logfile);
 			log.log(level, message);
@@ -163,11 +163,11 @@ public class Utils {
         HttpURLConnection conn = (HttpURLConnection)(url.openConnection());
         conn.setRequestMethod("GET");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        InputStream inp = conn.getInputStream();
-        byte[] buf = new byte[4096];
+        InputStream input = conn.getInputStream();
+        byte[] buffer = new byte[4096];
         int bytesRead;
-        while ((bytesRead = inp.read(buf)) >= 0) {
-            baos.write(buf, 0, bytesRead);
+        while ((bytesRead = input.read(buffer)) >= 0) {
+            baos.write(buffer, 0, bytesRead);
         }
         
         return baos.toByteArray();
