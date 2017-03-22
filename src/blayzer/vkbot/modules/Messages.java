@@ -61,11 +61,19 @@ public class Messages {
 					VK.sendMessage(uid, answer, null);
 				}
 			else
+				if(Utils.checkMessage("сократи")){
+					VK.sendMessage(uid, VK.getShortLink(VKBot.lastMessage[2]), null);
+				}
+			else
 				if(Utils.checkMessage("напиши")) {
 					if(VKBot.lastMessage.length > 2) {
 						StringBuilder fullMessage = new StringBuilder();
 						for (int i = 3; i < lastMessage.length; i++) {
 							fullMessage.append(lastMessage[i] + " ");
+							if(lastMessage[i].startsWith("http") || lastMessage[i].startsWith("www")) {
+								VK.sendMessage(uid, "Я не буду отправлять сообщение со ссылками!", null);
+								break;
+							}
 						}
 						VK.sendMessage("user_id=" + VKBot.lastMessage[2], "Привет! Меня тут попросили тебе написать: \n"
 								+ fullMessage, null);

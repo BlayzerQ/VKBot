@@ -107,6 +107,20 @@ public class VK {
     	
     }
     
+    public static String getShortLink (String url) {
+    	try {
+			String request = Utils.readUrl(vkApi + "/method/utils.getShortLink?url=" + url + "&private=1" + "&access_token="+VKBot.vkToken+"&v=5.62");
+			JSONObject json = (JSONObject) new JSONParser().parse(request);
+			JSONObject response = (JSONObject) json.get("response");
+			String uri = (String) response.get("short_url");
+			return uri;
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+		return url;
+    	
+    }
+    
     public static void setAsRead (String uid) {
     	
 		try {
@@ -125,10 +139,10 @@ public class VK {
     public static String getName (String uid) {
     	
 		try {
-			String responce = Utils.readUrl(vkApi + "/method/users.get?" +
+			String request = Utils.readUrl(vkApi + "/method/users.get?" +
 					uid + "&access_token="+VKBot.vkToken+"&v=5.62");
             
-			JSONObject messages = (JSONObject) new JSONParser().parse(responce);
+			JSONObject messages = (JSONObject) new JSONParser().parse(request);
 			JSONArray response = (JSONArray) messages.get("response");
 			JSONObject json = (JSONObject) response.get(0);
 			String name = json.get("first_name").toString();
@@ -155,9 +169,9 @@ public class VK {
     public static String getPosts(Integer groupID, Integer limit) {
         try { 
         	Random random = new Random();
-			String responce = Utils.readUrl(vkApi + "/method/wall.get?owner_id=" + groupID + 
+			String response = Utils.readUrl(vkApi + "/method/wall.get?owner_id=" + groupID + 
         			"&offset=" + random.nextInt(limit) + "&count=1&access_token="+VKBot.vkToken+"&v=5.62");
-            return responce;
+            return response;
         } 
         catch (IOException e)
         {
@@ -167,9 +181,9 @@ public class VK {
     
     public static String searchVideo(String request) {
         try { 
-			String responce = Utils.readUrl(vkApi + "/method/video.search?q=" + request + 
+			String response = Utils.readUrl(vkApi + "/method/video.search?q=" + request + 
         			"&sort=2&adult=0&access_token="+VKBot.vkToken+"&v=5.62");
-            return responce;
+            return response;
         } 
         catch (IOException e)
         {
@@ -179,8 +193,8 @@ public class VK {
     
     public static String getRequests() {
 		try {
-			String responce = Utils.readUrl(vkApi + "/method/friends.getRequests?&access_token="+VKBot.vkToken+"&v=5.62");
-	    	return responce;
+			String response = Utils.readUrl(vkApi + "/method/friends.getRequests?&access_token="+VKBot.vkToken+"&v=5.62");
+	    	return response;
 	    	
 		} catch (IOException e) {
 			e.printStackTrace();

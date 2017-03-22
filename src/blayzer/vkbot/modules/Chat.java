@@ -21,7 +21,7 @@ public class Chat {
 			VK.sendMessage(uid, answer, null);
 		}
 		else
-		if(Utils.checkMessage("🌚"))
+		if(Utils.checkChatMessage("🌚"))
 			VK.sendMessage(uid, "&#127770;", null);
 //		else
 //		if(Utils.checkChatMessage("как дела", "как настроение", "как ты")) {
