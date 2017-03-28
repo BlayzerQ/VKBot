@@ -12,7 +12,7 @@ import blayzer.vkbot.utils.VK;
 public class Chat {
 
 	public static void Init(String uid, String[] lastMessage) throws ParseException, IOException {
-		if(Utils.checkChatMessage("сеть")) {
+		if(Utils.checkChatMessage("чат")) {
 			if(VKBot.lastMessage.length >= 2) {
 				StringBuilder answer = new StringBuilder();
 				for(int i=1; i < VKBot.lastMessage.length; i++) {
