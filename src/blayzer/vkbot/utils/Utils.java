@@ -3,22 +3,22 @@ package blayzer.vkbot.utils;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.List;
 import java.util.Random;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+
+import javax.xml.bind.DatatypeConverter;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -173,6 +173,69 @@ public class Utils {
         return baos.toByteArray();
     }
 	
+    public static String postRequest(String requestUrl, String body) {
+        String answer = null;
+        try {
+            URL url = new URL(requestUrl);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0");
+            con.setRequestProperty("Accept-Language", "UTF-8");
+
+            con.setDoOutput(true);
+
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(con.getOutputStream());
+            outputStreamWriter.write(body);
+            outputStreamWriter.flush();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            answer = response.toString();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return answer;
+    }
+    
+    public static String XORencrypt(String message, String key) {
+
+        int ml = message.length();
+        int kl = key.length();
+        String newmsg = "";
+
+        for (int i=0; i < ml; i++){
+            newmsg += ((char)(message.charAt(i) ^ key.charAt(i % kl)));
+
+        }
+
+        String encoded = DatatypeConverter.printBase64Binary(newmsg.getBytes());
+
+        return encoded;
+    }
+
+    public static String XORdecrypt(String encryptedMessage, String key) {
+        String decoded = new String(DatatypeConverter.parseBase64Binary(encryptedMessage));
+        String msg = decoded;
+        int ml = msg.length();
+        int kl = key.length();
+        String newmsg = "";
+
+        for (int i=0; i < ml; i++){
+
+            newmsg += ((char)(msg.charAt(i) ^ key.charAt(i % kl)));
+        }
+
+        return newmsg;
+    }
+    
     public static String fixString(String component) {
         String result = null;
 

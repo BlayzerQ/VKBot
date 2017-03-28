@@ -120,19 +120,23 @@ public class Messages {
 			else
 				if(Utils.checkMessage("найди")) {
 					if(VKBot.lastMessage.length > 2) {
-						JSONObject request = (JSONObject) new JSONParser().parse(VK.searchVideo(VKBot.lastMessage[2]));
+						StringBuilder answer = new StringBuilder();
+						for(int i=2; i < VKBot.lastMessage.length; i++) {
+							answer.append(VKBot.lastMessage[i] + " ");
+						}
+						JSONObject request = (JSONObject) new JSONParser().parse(VK.searchVideo(answer.toString()));
 						JSONObject response = (JSONObject) request.get("response");
-							if(VKBot.wordsBlacklist.contains(VKBot.lastMessage[2].toLowerCase())) {
-								VK.sendMessage(uid, "Я не смог это найти", null);
-							} else
-							if(response != null) {
-								JSONArray items = (JSONArray) response.get("items");
-								JSONObject json = (JSONObject) items.get(0);
-								String owner_id = json.get("owner_id").toString();
-								String id = json.get("id").toString();
-								VK.sendMessage(uid, "Вот, что я нашел", "video" + owner_id + "_" + id);
-
-							}
+						
+						if(response != null) {
+							JSONArray items = (JSONArray) response.get("items");
+							JSONObject json = (JSONObject) items.get(0);
+							String owner_id = json.get("owner_id").toString();
+							String id = json.get("id").toString();
+							if(VKBot.wordsBlacklist.contains(answer))
+								VK.sendMessage(uid, "Я не буду это искать", null);
+							else
+							VK.sendMessage(uid, "Вот, что я нашел", "video" + owner_id + "_" + id);
+						}
 					} else
 						VK.sendMessage(uid, "Что мне искать?", null);
 				}
@@ -141,7 +145,7 @@ public class Messages {
 					if(VKBot.lastMessage.length > 2) {
 						StringBuilder answer = new StringBuilder();
 						for(int i=2; i < VKBot.lastMessage.length; i++) {
-							answer.append(VKBot.lastMessage[i]);
+							answer.append(VKBot.lastMessage[i] + " ");
 						}
 						VK.sendMessage(uid, "", VK.uploadDoc(answer.toString()));
 					} else
@@ -152,7 +156,7 @@ public class Messages {
 					if(VKBot.lastMessage.length > 2) {
 						StringBuilder answer = new StringBuilder();
 						for(int i=2; i < VKBot.lastMessage.length; i++) {
-							answer.append(VKBot.lastMessage[i].toLowerCase());
+							answer.append(VKBot.lastMessage[i]  + " ");
 						}
 						if(VK.docSearch(answer.toString()) == "Ничего не найдено" || VKBot.wordsBlacklist.contains(answer)) {
 							VK.sendMessage(uid, "Я не смог это найти", null);

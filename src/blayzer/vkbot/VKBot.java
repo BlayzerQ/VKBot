@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -12,12 +14,14 @@ import java.util.logging.Level;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import blayzer.vkbot.modules.Posts;
 import blayzer.vkbot.modules.Chat;
 import blayzer.vkbot.modules.Messages;
 import blayzer.vkbot.modules.Shedule;
 import blayzer.vkbot.modules.Sites;
+import blayzer.vkbot.utils.IIIAPI;
 import blayzer.vkbot.utils.Utils;
 import blayzer.vkbot.utils.VK;
 
@@ -29,7 +33,10 @@ public class VKBot {
 	public static String blacklist = "0, 0";
 	public static boolean debug = false;
 	public static boolean chat = false;
+	public static String iiiBotId = "";
 	public static String[] lastMessage;
+	
+	public static Map<String, String> IIIsessions = new HashMap<String, String>();
 	
 	public void Init() {
 		Utils.logging(Level.INFO, "VKBot запускается...");
@@ -43,6 +50,7 @@ public class VKBot {
 			debug = Boolean.valueOf(config.getProperty("debug"));
 			chat = Boolean.valueOf(config.getProperty("chat"));
 			vkToken = config.getProperty("vkToken");
+			iiiBotId = config.getProperty("iiiBotId");
 		} catch (IOException e) {
 			Utils.logging(Level.WARNING, "Не найден файл конфигурации. Будут использованы стандартные значения.");
 		}
@@ -52,6 +60,7 @@ public class VKBot {
 	}
 	
 	public void Work(){
+		//Runnable VKBot = () -> {
 		try {
 			while(true){
 				JSONObject messages = (JSONObject) new JSONParser().parse(VK.getMessages());
@@ -96,6 +105,8 @@ public class VKBot {
 			e.printStackTrace();
 			Utils.logging(Level.SEVERE, e.getMessage());
 		}
+		//};
+		//new Thread(VKBot).start();
 	}
 
 	public static void main(String[] args){
