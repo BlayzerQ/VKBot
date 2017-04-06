@@ -1,7 +1,7 @@
 package blayzer.vkbot.modules;
 
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
+import org.apache.log4j.Level;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -29,7 +29,7 @@ public class Shedule {
 			
 			TimeUnit.SECONDS.sleep(3);
 			} catch (InterruptedException | ParseException e) {
-				Utils.logging(Level.SEVERE, e.getStackTrace().toString());
+				Utils.logging(Level.ERROR, e.getStackTrace().toString());
 			}
 		 }
 		};
@@ -40,7 +40,7 @@ public class Shedule {
 				VK.setOnline();
 				TimeUnit.MINUTES.sleep(10);
 				} catch (InterruptedException e) {
-					Utils.logging(Level.SEVERE, e.getStackTrace().toString());
+					Utils.logging(Level.ERROR, e.getStackTrace().toString());
 				}
 			 }
 			};

@@ -53,7 +53,7 @@ public class Posts {
 				}
 			else
 				if(Utils.checkMessage("сиськи")) {
-					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-20282193, 800));
+					JSONObject messages = (JSONObject) new JSONParser().parse(VK.getPosts(-73401695, 800));
 					JSONObject response = (JSONObject) messages.get("response");
 						if(response != null) {
 							if(response != null) {

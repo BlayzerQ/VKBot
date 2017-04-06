@@ -4,12 +4,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
+import org.apache.log4j.Level;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -28,31 +32,39 @@ import blayzer.vkbot.utils.VK;
 public class VKBot {
 	
 	public static String prefixes = "!, фб, файнбот, вб, вкбот";
-	public static String vkToken = "";
+	public static String[] vkTokens;
 	public static String wordsBlacklist = "цп, лоли, дп";
 	public static String blacklist = "0, 0";
 	public static boolean debug = false;
 	public static boolean chat = false;
+	public static boolean chatVoice = false;
 	public static String iiiBotId = "";
 	public static String[] lastMessage;
 	
 	public static Map<String, String> IIIsessions = new HashMap<String, String>();
+	public static int tokenid = 0;
 	
 	public void Init() {
 		Utils.logging(Level.INFO, "VKBot запускается...");
 		Properties config = new Properties();
 		try {
-			BufferedReader configFile = new BufferedReader(new InputStreamReader(new FileInputStream("config.properties"), "UTF8"));
+			File file = new File("config.properties");
+			if(!file.exists()){
+				InputStream link = (VKBot.class.getResourceAsStream("config.properties"));
+			    Files.copy(link, file.getAbsoluteFile().toPath());
+			}
+			BufferedReader configFile = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
 			config.load(configFile);
 			prefixes = config.getProperty("prefixes");
 			blacklist = config.getProperty("blacklist");
 			wordsBlacklist = config.getProperty("wordsBlacklist");
 			debug = Boolean.valueOf(config.getProperty("debug"));
 			chat = Boolean.valueOf(config.getProperty("chat"));
-			vkToken = config.getProperty("vkToken");
+			chatVoice = Boolean.valueOf(config.getProperty("chatVoice"));
+			vkTokens = config.getProperty("vkToken").split(";");
 			iiiBotId = config.getProperty("iiiBotId");
 		} catch (IOException e) {
-			Utils.logging(Level.WARNING, "Не найден файл конфигурации. Будут использованы стандартные значения.");
+			Utils.logging(Level.WARN, "Не найден файл конфигурации. Будут использованы стандартные значения.");
 		}
 		Shedule.Init();
 		Utils.logging(Level.INFO, "Приступаю к приему сообщений.");
@@ -99,11 +111,12 @@ public class VKBot {
 							}
 						}
 					}
+					//Utils.logging(Level.INFO, Utils.getToken());
 					TimeUnit.SECONDS.sleep(1);
 				}
 		} catch (Exception e) {
 			e.printStackTrace();
-			Utils.logging(Level.SEVERE, e.getMessage());
+			Utils.logging(Level.ERROR, e.getMessage());
 		}
 		//};
 		//new Thread(VKBot).start();

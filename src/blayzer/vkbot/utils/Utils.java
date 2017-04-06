@@ -9,17 +9,21 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Random;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+//import java.util.logging.FileHandler;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+//import java.util.logging.SimpleFormatter;
 
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -28,21 +32,14 @@ import blayzer.vkbot.VKBot;
 public class Utils {
 	
 	public static Logger log = Logger.getLogger(VKBot.class.getName());
-	public static File data = new File("data");
-	
 	public static void logging(Level level, String message) {
 		try {
-			File file = new File("logs");
-			if (!file.exists()) {
-			    file.mkdir();
-			}
-			FileHandler logfile = new FileHandler("logs/VKBot.log", 60240, 3, true);
-			logfile.setFormatter(new SimpleFormatter());
-			log.addHandler(logfile);
-			log.log(level, message);
-		} catch (SecurityException | IOException e) {
+			File file = new File(VKBot.class.getResource("log4j.properties").toURI());
+	        PropertyConfigurator.configure(file.toString());
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
+        log.log(level, message);
 	}
 
 	public static String readUrl(String url) throws IOException {
@@ -234,6 +231,20 @@ public class Utils {
         }
 
         return newmsg;
+    }
+    
+    public static String getToken() {
+    	String token = VKBot.vkTokens[0];
+    	
+    	if(VKBot.tokenid < VKBot.vkTokens.length) {
+    		token = VKBot.vkTokens[VKBot.tokenid];
+    		VKBot.tokenid++;
+    		return token;
+    	} else {
+    		VKBot.tokenid = 0;
+    		return token;
+    	}
+    	
     }
     
     public static String fixString(String component) {

@@ -12,7 +12,7 @@ import blayzer.vkbot.utils.VK;
 public class Chat {
 
 	public static void Init(String uid, String[] lastMessage) throws ParseException, IOException {
-		if(Utils.checkChatMessage("чат")) {
+		if(Utils.checkMessage("чат")) {
 			if(VKBot.lastMessage.length >= 2) {
 				StringBuilder answer = new StringBuilder();
 				for(int i=1; i < VKBot.lastMessage.length; i++) {
@@ -29,6 +29,10 @@ public class Chat {
                         }
 					}
 					String iii_answer = IIIAPI.getAnswer(session, answer.toString());
+					if(VKBot.chatVoice)
+						VK.sendMessage(uid, iii_answer, VK.uploadDoc(iii_answer));
+					else
+						VK.sendMessage(uid, iii_answer, null);
 					VK.sendMessage(uid, iii_answer, VK.uploadDoc(iii_answer));
 				} catch (Exception e) {
 					e.printStackTrace();

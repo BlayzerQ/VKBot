@@ -6,7 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
+import org.apache.log4j.Level;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,7 +23,7 @@ public class VK {
     public static String getMessages() {
 
         try {
-        	String response = Utils.readUrl(vkApi + "/method/messages.get?out=0&count=20&access_token="+VKBot.vkToken+"&v=5.62");
+        	String response = Utils.readUrl(vkApi + "/method/messages.get?out=0&count=20&access_token="+Utils.getToken()+"&v=5.62");
             return response;
         } 
         catch (IOException e)
@@ -39,7 +39,7 @@ public class VK {
 			StringBuilder vkurl =  new StringBuilder();
 			vkurl.append("/method/messages.send?" +
 						uid +"&message=" + Utils.fixString(message) + "&random_id=" + random.nextInt()
-						+ "&v=5.45&access_token="+VKBot.vkToken+"&v=5.62");
+						+ "&v=5.45&access_token="+Utils.getToken()+"&v=5.62");
 			if(attachment != null) {
 				vkurl.append("&attachment=" + attachment);
 			}
@@ -55,7 +55,7 @@ public class VK {
     	//File file = new File(Utils.data.getAbsolutePath() + "/" + filename + ".mp3");
     	try {
         	//Utils.speech(filename);
-			String server = Utils.readUrl(vkApi + "/method/docs.getUploadServer?access_token="+VKBot.vkToken+"&type=audio_message&v=5.62");
+			String server = Utils.readUrl(vkApi + "/method/docs.getUploadServer?access_token="+Utils.getToken()+"&type=audio_message&v=5.62");
 			JSONObject object = (JSONObject) new JSONParser().parse(server);
 			JSONObject response = (JSONObject) object.get("response");
 			String url = (String) response.get("upload_url");
@@ -70,7 +70,7 @@ public class VK {
                 JSONObject obj3 = (JSONObject) new JSONParser().parse(line.toString());
                 fileUpl = (String) obj3.get("file");
             }
-            String respsave = Utils.readUrl("https://api.vk.com/method/docs.save?file=" +fileUpl +"&access_token="+VKBot.vkToken+"&v=5.60");
+            String respsave = Utils.readUrl("https://api.vk.com/method/docs.save?file=" +fileUpl +"&access_token="+Utils.getToken()+"&v=5.60");
             JSONObject json = (JSONObject) new JSONParser().parse(respsave);
             JSONArray endresponse = (JSONArray) json.get("response");
             if(endresponse != null) {
@@ -87,7 +87,7 @@ public class VK {
     
     public static String docSearch (String text) {
     	try {
-			String request = Utils.readUrl(vkApi + "/method/docs.search?q="+text+"&count=10"+"&offset="+random.nextInt(300)+"&access_token="+VKBot.vkToken+"&v=5.60");
+			String request = Utils.readUrl(vkApi + "/method/docs.search?q="+text+"&count=10"+"&offset="+random.nextInt(300)+"&access_token="+Utils.getToken()+"&v=5.60");
 			JSONObject json = (JSONObject) new JSONParser().parse(request);
 			JSONObject response = (JSONObject) json.get("response");
 			if(response != null) {
@@ -109,7 +109,7 @@ public class VK {
     
     public static String getShortLink (String url) {
     	try {
-			String request = Utils.readUrl(vkApi + "/method/utils.getShortLink?url=" + url + "&private=1" + "&access_token="+VKBot.vkToken+"&v=5.62");
+			String request = Utils.readUrl(vkApi + "/method/utils.getShortLink?url=" + url + "&private=1" + "&access_token="+Utils.getToken()+"&v=5.62");
 			JSONObject json = (JSONObject) new JSONParser().parse(request);
 			JSONObject response = (JSONObject) json.get("response");
 			String uri = (String) response.get("short_url");
@@ -126,10 +126,10 @@ public class VK {
 		try {
 			if(uid.contains("chat_id")){
 			Utils.connect(vkApi + "/method/messages.markAsRead?peer_id=" +
-					uid.replace("chat_id=", "2000000000") + "&access_token="+VKBot.vkToken+"&v=5.62");
+					uid.replace("chat_id=", "2000000000") + "&access_token="+Utils.getToken()+"&v=5.62");
 			} else {
 			Utils.connect(vkApi + "/method/messages.markAsRead?peer_id=" +
-					uid.replace("user_id=", "") + "&access_token="+VKBot.vkToken+"&v=5.62");
+					uid.replace("user_id=", "") + "&access_token="+Utils.getToken()+"&v=5.62");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -140,7 +140,7 @@ public class VK {
     	
 		try {
 			String request = Utils.readUrl(vkApi + "/method/users.get?" +
-					uid + "&access_token="+VKBot.vkToken+"&v=5.62");
+					uid + "&access_token="+Utils.getToken()+"&v=5.62");
             
 			JSONObject messages = (JSONObject) new JSONParser().parse(request);
 			JSONArray response = (JSONArray) messages.get("response");
@@ -160,7 +160,7 @@ public class VK {
     public static void setOnline () {
     	
 		try {
-			Utils.connect(vkApi + "/method/account.setOnline?access_token="+VKBot.vkToken+"&v=5.62");
+			Utils.connect(vkApi + "/method/account.setOnline?access_token="+Utils.getToken()+"&v=5.62");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -170,7 +170,7 @@ public class VK {
         try { 
         	Random random = new Random();
 			String response = Utils.readUrl(vkApi + "/method/wall.get?owner_id=" + groupID + 
-        			"&offset=" + random.nextInt(limit) + "&count=1&access_token="+VKBot.vkToken+"&v=5.62");
+        			"&offset=" + random.nextInt(limit) + "&count=1&access_token="+Utils.getToken()+"&v=5.62");
             return response;
         } 
         catch (IOException e)
@@ -182,7 +182,7 @@ public class VK {
     public static String searchVideo(String request) {
         try { 
 			String response = Utils.readUrl(vkApi + "/method/video.search?q=" + request + 
-        			"&sort=2&adult=0&access_token="+VKBot.vkToken+"&v=5.62");
+        			"&sort=2&adult=0&access_token="+Utils.getToken()+"&v=5.62");
             return response;
         } 
         catch (IOException e)
@@ -193,7 +193,7 @@ public class VK {
     
     public static String getRequests() {
 		try {
-			String response = Utils.readUrl(vkApi + "/method/friends.getRequests?&access_token="+VKBot.vkToken+"&v=5.62");
+			String response = Utils.readUrl(vkApi + "/method/friends.getRequests?&access_token="+Utils.getToken()+"&v=5.62");
 	    	return response;
 	    	
 		} catch (IOException e) {
@@ -204,7 +204,7 @@ public class VK {
     
     public static void addFriends(Long uid) {
 		try {
-			Utils.connect(vkApi + "/method/friends.add?user_id="+ uid +"&access_token="+VKBot.vkToken+"&v=5.62");
+			Utils.connect(vkApi + "/method/friends.add?user_id="+ uid +"&access_token="+Utils.getToken()+"&v=5.62");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
