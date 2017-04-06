@@ -97,7 +97,7 @@ public class VKBot {
 								Chat.Init(uid, lastMessage);
 							}
 							
-							//Обработка сообщений с префиксами
+							//Обработка сообщений с префиксами (Сделать нормальную проверку префиксов, без ложных страбатываний)
 							if(prefixes.contains(lastMessage[0]) && status == 0 && lastMessage.length >= 2){
 								if(!blacklist.contains(uid)) {
 									VK.setAsRead(uid);

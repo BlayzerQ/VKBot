@@ -46,10 +46,10 @@ public class Messages {
 			else
 				if(Utils.checkMessage("неделя")) {
 					    int day = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
-					    if(day%2 == 0){
-					    	VK.sendMessage(uid, "Верхняя неделя", null);
-					    }else{
+					    if(day % 2 == 0){
 					    	VK.sendMessage(uid, "Нижняя неделя", null);
+					    }else{
+					    	VK.sendMessage(uid, "Верхняя неделя", null);
 					    }
 				}
 			else
