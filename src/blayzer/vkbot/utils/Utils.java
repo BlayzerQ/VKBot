@@ -33,12 +33,8 @@ public class Utils {
 	
 	public static Logger log = Logger.getLogger(VKBot.class.getName());
 	public static void logging(Level level, String message) {
-		try {
-			File file = new File(VKBot.class.getResource("log4j.properties").toURI());
-	        PropertyConfigurator.configure(file.toString());
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
+		InputStream in = VKBot.class.getResourceAsStream("log4j.properties");
+		PropertyConfigurator.configure(in);
         log.log(level, message);
 	}
 
