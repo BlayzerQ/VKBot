@@ -33,7 +33,6 @@ public class Chat {
 						VK.sendMessage(uid, iii_answer, VK.uploadDoc(iii_answer));
 					else
 						VK.sendMessage(uid, iii_answer, null);
-					VK.sendMessage(uid, iii_answer, VK.uploadDoc(iii_answer));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
