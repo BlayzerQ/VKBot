@@ -32,6 +32,7 @@ public class IIIAPI {
         decrypt = new String(DatatypeConverter.parseBase64Binary(decrypt));
         if (!(decrypt.equals(""))) {
         	JSONObject decodedJson = (JSONObject) new JSONParser().parse(decrypt);
+        	System.out.println(decodedJson.toString());
             iiiSession = ((JSONObject) decodedJson
                     .get("result"))
                     .get("cuid")

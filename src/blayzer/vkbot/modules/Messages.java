@@ -124,7 +124,7 @@ public class Messages {
 						for(int i=2; i < VKBot.lastMessage.length; i++) {
 							answer.append(VKBot.lastMessage[i] + " ");
 						}
-						JSONObject request = (JSONObject) new JSONParser().parse(VK.searchVideo(answer.toString()));
+						JSONObject request = (JSONObject) new JSONParser().parse(VK.searchVideo(answer.toString().trim()));
 						JSONObject response = (JSONObject) request.get("response");
 						
 						if(response != null) {
@@ -132,7 +132,7 @@ public class Messages {
 							JSONObject json = (JSONObject) items.get(0);
 							String owner_id = json.get("owner_id").toString();
 							String id = json.get("id").toString();
-							if(VKBot.wordsBlacklist.contains(answer))
+							if(VKBot.wordsBlacklist.contains(answer.toString().trim()))
 								VK.sendMessage(uid, "Я не буду это искать", null);
 							else
 							VK.sendMessage(uid, "Вот, что я нашел", "video" + owner_id + "_" + id);
@@ -158,10 +158,10 @@ public class Messages {
 						for(int i=2; i < VKBot.lastMessage.length; i++) {
 							answer.append(VKBot.lastMessage[i]  + " ");
 						}
-						if(VK.docSearch(answer.toString()) == "Ничего не найдено" || VKBot.wordsBlacklist.contains(answer)) {
+						if(VK.docSearch(answer.toString()) == "Ничего не найдено" || VKBot.wordsBlacklist.contains(answer.toString().trim())) {
 							VK.sendMessage(uid, "Я не смог это найти", null);
 						} else
-						VK.sendMessage(uid, "", VK.docSearch(answer.toString()));
+						VK.sendMessage(uid, "", VK.docSearch(answer.toString().trim()));
 					} else
 						VK.sendMessage(uid, "Что мне искать?", null);
 				}	

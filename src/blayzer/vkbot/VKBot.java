@@ -103,7 +103,6 @@ public class VKBot {
 									VK.setAsRead(uid);
 									Utils.logging(Level.INFO, "Сообщение от " + uid.replaceAll("_id=", " id") 
 									+ ": " + fullMessage);
-								
 									Messages.Init(uid, lastMessage);
 									Posts.Init(uid, lastMessage);
 									Sites.Init(uid, lastMessage);

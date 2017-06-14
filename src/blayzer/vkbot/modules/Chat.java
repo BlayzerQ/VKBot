@@ -34,6 +34,7 @@ public class Chat {
 					else
 						VK.sendMessage(uid, iii_answer, null);
 				} catch (Exception e) {
+					VK.sendMessage(uid, "Я не могу сейчас говорить", null);
 					e.printStackTrace();
 				}
 			} else
